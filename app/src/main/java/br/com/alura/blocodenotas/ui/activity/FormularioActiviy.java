@@ -1,21 +1,22 @@
 package br.com.alura.blocodenotas.ui.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import br.com.alura.blocodenotas.R;
+import br.com.alura.blocodenotas.dialog.DialogBack;
 import br.com.alura.blocodenotas.model.Nota;
 
 import static br.com.alura.blocodenotas.ui.activity.Constantes.CHAVE_NOTA;
@@ -26,8 +27,8 @@ public class FormularioActiviy extends AppCompatActivity {
 
     public static final String TITLE_APPBAR_INSERT = "Nova nota";
     public static final String TITLE_APPBAR_EDIT = "Altera nota";
-    private EditText titulo;
-    private EditText descricao;
+    private EditText titulo = null;
+    private EditText descricao = null;
     private int posicaoRecebida = -1;
 
     @Override
@@ -36,11 +37,11 @@ public class FormularioActiviy extends AppCompatActivity {
         setContentView(R.layout.activity_formulario_activiy);
 
         setTitle(TITLE_APPBAR_INSERT);
-        inicializaCampos();
         preencheForm();
     }
 
     private void preencheForm() {
+        inicializaCampos();
         Intent infRecebido = getIntent();
         if(infRecebido.hasExtra(CHAVE_NOTA)) {
             setTitle(TITLE_APPBAR_EDIT);
@@ -73,6 +74,29 @@ public class FormularioActiviy extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if(titulo != null && descricao != null) {
+            Log.i("titulo", titulo.toString());
+            Log.i("descricao", descricao.toString());
+        }
+
+        new DialogBack(FormularioActiviy.this)
+                .setTitle("Deseja realmente voltar?")
+                .setMsg("Os dados adicionados serão perdidos")
+                .setOnNaoListener(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).setOnSimListener(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        }).build().show();
+    }
+
     private void retornaNota(Nota nota) {
         Intent returnInsert = new Intent();
         returnInsert.putExtra(CHAVE_NOTA, nota);
@@ -87,9 +111,3 @@ public class FormularioActiviy extends AppCompatActivity {
         return new Nota(titulo.getText().toString(), descricao.getText().toString(), dataAtual);
     }
 }
-
-
-
-
-
-

@@ -10,7 +10,9 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.ContextMenu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import java.util.List;
@@ -107,9 +109,6 @@ public class ListaNotasActivity extends AppCompatActivity {
                 carregaNotas();
             }
         }
-
-
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -122,7 +121,13 @@ public class ListaNotasActivity extends AppCompatActivity {
     }
 
     private void configuraItemTouchHelper(RecyclerView lista) {
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new NotaItemTouchHelper(adapter));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new NotaItemTouchHelper(adapter, this));
         itemTouchHelper.attachToRecyclerView(lista);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        super.onCreateContextMenu(menu, v, menuInfo);
     }
 }

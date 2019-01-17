@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import br.com.alura.blocodenotas.model.Nota;
@@ -22,7 +23,7 @@ public class NotasDao extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE notas (" +
-                "id INT PRIMARY KEY AUTOINCREMENT," +
+                "id INT PRIMARY KEY ," +
                 "titulo TEXT NOT NULL," +
                 "descricao TEXT NOT NULL," +
                 "data DATE)";
@@ -109,5 +110,11 @@ public class NotasDao extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         String[] params = {nota.getId().toString()};
         db.delete("notas", "id = ?", params);
+    }
+
+    public void invertePosicao(int posicaoInicial, int posicaoFinal) {
+        List<Nota> notas = new ArrayList<>();
+        notas = findAll();
+        Collections.swap(notas, posicaoInicial, posicaoFinal);
     }
 }
