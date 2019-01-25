@@ -8,15 +8,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import br.com.alura.blocodenotas.R;
 import br.com.alura.blocodenotas.dialog.DialogBack;
+import br.com.alura.blocodenotas.dialog.DialogLoading;
 import br.com.alura.blocodenotas.model.Nota;
 
 import static br.com.alura.blocodenotas.ui.activity.Constantes.CHAVE_NOTA;
@@ -30,6 +33,7 @@ public class FormularioActiviy extends AppCompatActivity {
     private EditText titulo = null;
     private EditText descricao = null;
     private int posicaoRecebida = -1;
+    private Nota notaRecebida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +49,12 @@ public class FormularioActiviy extends AppCompatActivity {
         Intent infRecebido = getIntent();
         if(infRecebido.hasExtra(CHAVE_NOTA)) {
             setTitle(TITLE_APPBAR_EDIT);
-            Nota notaRecebida = (Nota) infRecebido.getSerializableExtra(CHAVE_NOTA);
+            notaRecebida = (Nota) infRecebido.getSerializableExtra(CHAVE_NOTA);
             posicaoRecebida = infRecebido.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
             titulo.setText(notaRecebida.getTitulo());
             descricao.setText(notaRecebida.getDescricao());
+        } else {
+            notaRecebida = new Nota();
         }
     }
 
@@ -67,20 +73,30 @@ public class FormularioActiviy extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_form_save) {
-            Nota novaNota = criaNota();
-            retornaNota(novaNota);
-            finish();
+
+            Nota notaRetornada = criaNota();
+
+            if(validaCampos()) {
+                new DialogLoading(this, "Salvando...").build().show();
+                if(notaRecebida.getId() != null) {
+                    notaRetornada.setId(notaRecebida.getId());
+                }
+                retornaNota(notaRetornada);
+                finish();
+            } else {
+                new DialogBack(this)
+                        .setTitle("Atenção")
+                        .setMsg("Necessário preencher todos os campos")
+                        .setSim("OK")
+                        .setOnSimListener(((dialog, which) -> dialog.dismiss()))
+                        .build().show();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        if(titulo != null && descricao != null) {
-            Log.i("titulo", titulo.toString());
-            Log.i("descricao", descricao.toString());
-        }
-
         new DialogBack(FormularioActiviy.this)
                 .setTitle("Deseja realmente voltar?")
                 .setMsg("Os dados adicionados serão perdidos")
@@ -107,7 +123,17 @@ public class FormularioActiviy extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @NonNull
     private Nota criaNota() {
-        Date dataAtual = new Date(2018,11,11);
-        return new Nota(titulo.getText().toString(), descricao.getText().toString(), dataAtual);
+        String data = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss"));
+        return new Nota(titulo.getText().toString(), descricao.getText().toString(), data);
+    }
+
+    private Boolean validaCampos() {
+        if(TextUtils.isEmpty(titulo.getText().toString())) {
+            titulo.requestFocus();
+            return false;
+        } else if(TextUtils.isEmpty(descricao.getText().toString())) {
+            titulo.requestFocus();
+            return false;
+        } else return true;
     }
 }

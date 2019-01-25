@@ -17,7 +17,7 @@ public class DialogBack extends AlertDialog.Builder {
 
     public DialogBack(Context context) {
         super(context);
-        this.setCancelable(false);
+        this.setCancelable(true);
         this.setSim("Sim");
         this.setNao("Não");
     }

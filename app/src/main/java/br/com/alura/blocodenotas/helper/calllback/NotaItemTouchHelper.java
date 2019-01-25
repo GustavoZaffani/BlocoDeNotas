@@ -6,12 +6,16 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import br.com.alura.blocodenotas.dao.NotasDao;
 import br.com.alura.blocodenotas.dialog.DialogBack;
 import br.com.alura.blocodenotas.model.Nota;
+import br.com.alura.blocodenotas.ui.activity.ListaNotasActivity;
 import br.com.alura.blocodenotas.ui.recyclerView.adapter.ListaNotasAdapter;
 
 public class NotaItemTouchHelper extends ItemTouchHelper.Callback {
@@ -35,27 +39,27 @@ public class NotaItemTouchHelper extends ItemTouchHelper.Callback {
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
         int posicaoInicial = viewHolder.getAdapterPosition();
         int posicaoFinal = viewHolder1.getAdapterPosition();
-        return true;
+        return false;
     }
 
+    //TODO necessário encontrar uma forma de excluir com o Swipe
     @Override
-    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         final int posicao = viewHolder.getAdapterPosition();
-        new DialogBack(context)
-                .setTitle("Confirmação")
-                .setMsg("Deseja realmente excluir essa nota?")
-                .setOnSimListener(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+//        List<Nota> nota = null;
+//        String titulo = nota.get(viewHolder.getAdapterPosition()).getTitulo();
 
-                    }
+        Log.i("que porra", String.valueOf(posicao));
+        new DialogBack(context)
+                .setTitle("Atenção")
+                .setMsg("Tem certeza que deseja excluir essa nota?")
+                .setOnSimListener((dialog, which) -> {
+                        List<Nota> notas = new NotasDao(context).findAll();
+                        Toast.makeText(context, "Lista recarregada", Toast.LENGTH_SHORT).show();
                 })
-                .setOnNaoListener(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        List<Nota> notaList = new NotasDao(context).findAll();
-                        Log.i("nota teste ", notaList.get(posicao).getTitulo());
-                    }
+                .setOnNaoListener((dialog, which) -> {
+
+                        dialog.dismiss();
                 })
                 .build().show();
     }

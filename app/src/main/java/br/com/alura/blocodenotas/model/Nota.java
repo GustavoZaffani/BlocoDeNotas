@@ -6,12 +6,12 @@ import java.util.Date;
 
 public class Nota implements Serializable {
 
-    private Integer id;
+    private String id;
     private String titulo;
     private String descricao;
-    private Date data;
+    private String data;
 
-    public Nota(String titulo, String descricao, Date data) {
+    public Nota(String titulo, String descricao, String data) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.data = data;
@@ -19,11 +19,11 @@ public class Nota implements Serializable {
 
     public Nota() {}
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -43,11 +43,11 @@ public class Nota implements Serializable {
         this.descricao = descricao;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 }
