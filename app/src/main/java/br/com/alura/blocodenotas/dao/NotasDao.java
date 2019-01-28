@@ -5,10 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,7 +32,6 @@ public class NotasDao extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         switch (oldVersion){
-
         }
     }
 
@@ -65,9 +62,7 @@ public class NotasDao extends SQLiteOpenHelper {
         String sql = "SELECT * FROM notas WHERE titulo LIKE ?";
         SQLiteDatabase db = getReadableDatabase();
         String search = "%" + titulo + "%";
-        Log.i("aqui está", search);
         Cursor c = db.rawQuery(sql, new String[] {search});
-
         List<Nota> notas = populaNotas(c);
         c.close();
         return notas;
@@ -97,15 +92,8 @@ public class NotasDao extends SQLiteOpenHelper {
 
     public void delete(Nota nota) {
         SQLiteDatabase db = getWritableDatabase();
-        //Log.i("olha aqui o id ", nota.getId());
         String[] params = {nota.getId()};
         db.delete("notas", "id = ?", params);
-    }
-
-    public void invertePosicao(int posicaoInicial, int posicaoFinal) {
-        List<Nota> notas = new ArrayList<>();
-        notas = findAll();
-        Collections.swap(notas, posicaoInicial, posicaoFinal);
     }
 
     private String geraUUID() {

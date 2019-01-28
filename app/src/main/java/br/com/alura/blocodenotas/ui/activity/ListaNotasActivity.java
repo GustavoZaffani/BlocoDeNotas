@@ -2,7 +2,6 @@ package br.com.alura.blocodenotas.ui.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +12,7 @@ import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,6 +26,7 @@ import br.com.alura.blocodenotas.dialog.DialogBack;
 import br.com.alura.blocodenotas.dialog.DialogFiltro;
 import br.com.alura.blocodenotas.dialog.DialogLoading;
 import br.com.alura.blocodenotas.helper.calllback.NotaItemTouchHelper;
+import br.com.alura.blocodenotas.model.Lixeira;
 import br.com.alura.blocodenotas.model.Nota;
 import br.com.alura.blocodenotas.ui.recyclerView.adapter.ListaNotasAdapter;
 import br.com.alura.blocodenotas.ui.recyclerView.adapter.listener.OnItemClickListener;
@@ -43,7 +44,6 @@ public class ListaNotasActivity extends AppCompatActivity {
     private NotasDao dao;
     private List<Nota> notas;
     private Dialog loader;
-
     private EditText texto;
 
     @Override
@@ -55,6 +55,18 @@ public class ListaNotasActivity extends AppCompatActivity {
         carregaNotas();
         goToNewForm();
         goToFilter();
+        goToLixeira();
+    }
+
+    private void goToLixeira() {
+        FloatingActionButton openLixeira = findViewById(R.id.lista_btn_lixeira);
+        openLixeira.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goLixeira = new Intent(ListaNotasActivity.this, LixeiraActivity.class);
+                startActivity(goLixeira);
+            }
+        });
     }
 
     @Override
@@ -75,7 +87,7 @@ public class ListaNotasActivity extends AppCompatActivity {
     private void configuraRecyclerView(List<Nota> notas) {
         RecyclerView listaNotas = findViewById(R.id.lista_notas_recyclerView);
         configuraAdapter(notas, listaNotas);
-        configuraItemTouchHelper(listaNotas);
+        //configuraItemTouchHelper(listaNotas);
     }
 
     private void configuraAdapter(List<Nota> notas, RecyclerView listaNotas) {
@@ -86,24 +98,19 @@ public class ListaNotasActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Nota nota, int posicao) {
                 new DialogBack(ListaNotasActivity.this)
-                        .setTitle("O que você quer?")
-                        .setMsg("Selecione a opção abaixo")
+                        .setTitle("Atenção")
+                        .setMsg("Selecione uma opção abaixo: ")
                         .setSim("Editar")
                         .setNao("Excluir")
-                        .setOnSimListener(new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                        .setOnSimListener((dialog, which) -> {
                                 loader = new DialogLoading(ListaNotasActivity.this, "Carregando...").build();
                                 loader.show();
                                 Intent goToEdit = new Intent(ListaNotasActivity.this, FormularioActiviy.class);
                                 goToEdit.putExtra(CHAVE_NOTA, nota);
                                 goToEdit.putExtra(CHAVE_POSICAO, posicao);
                                 startActivityForResult(goToEdit, COD_REQ_ALTERA_NOTA);
-                            }
                         })
-                        .setOnNaoListener(new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                        .setOnNaoListener((dialog, which) -> {
                                 dao = new NotasDao(ListaNotasActivity.this);
                                 loader = new DialogLoading(ListaNotasActivity.this, "Excluindo...").build();
                                 loader.show();
@@ -111,9 +118,9 @@ public class ListaNotasActivity extends AppCompatActivity {
                                 carregaNotas();
                                 loader.dismiss();
                                 Toast.makeText(ListaNotasActivity.this, "Registro excluído!", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .build().show();
+                                Intent teste = new Intent(ListaNotasActivity.this, LixeiraActivity.class);
+                                startActivity(teste);
+                        }).build().show();
             }
         });
     }
@@ -173,7 +180,6 @@ public class ListaNotasActivity extends AppCompatActivity {
 
                 if(posicaoRecebida > POSICAO_INVALIDA) {
                     dao.save(notaRecebida);
-                    //adapter.altera(posicaoRecebida, notaRecebida);
                 }
                 carregaNotas();
                 Toast.makeText(ListaNotasActivity.this, "Alterado com sucesso!", Toast.LENGTH_SHORT).show();

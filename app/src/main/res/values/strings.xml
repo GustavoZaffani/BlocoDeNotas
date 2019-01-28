@@ -1,8 +1,8 @@
 <resources>
 
-    <string name="app_name">BlocoDeNotas</string>
+    <string name="app_name">Bloco de notas</string>
 
-    <string-array name="filtro">
+    <string-array name="spinner">
         <item>título</item>
         <item>descrição</item>
     </string-array>

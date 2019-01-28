@@ -1,5 +1,6 @@
 package br.com.alura.blocodenotas.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,6 +64,7 @@ public class FormularioActiviy extends AppCompatActivity {
         descricao = findViewById(R.id.form_editDesc);
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_salva_nota, menu);
