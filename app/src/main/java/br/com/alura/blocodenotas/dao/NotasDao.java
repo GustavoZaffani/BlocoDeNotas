@@ -4,48 +4,39 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import br.com.alura.blocodenotas.model.Lixeira;
 import br.com.alura.blocodenotas.model.Nota;
 
-public class NotasDao extends SQLiteOpenHelper {
+import static br.com.alura.blocodenotas.ui.activity.Constantes.COD_RESTAURA_NOTA;
+
+public class NotasDao {
+
+    private Context context;
+    private SQLiteDatabase database;
 
     public NotasDao(Context context) {
-        super(context, "Notas", null, 1);
+        this.context = context;
+        this.database = DBUtil.getInstance(context).getWritableDatabase();
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE notas (" +
-                "id CHAR(36) PRIMARY KEY ," +
-                "titulo TEXT NOT NULL," +
-                "descricao TEXT NOT NULL," +
-                "data TEXT)";
-        db.execSQL(sql);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        switch (oldVersion){
-        }
-    }
-
-    public void save(Nota nota) {
-        SQLiteDatabase db = getWritableDatabase();
+    public void save(Nota nota, int option) {
         ContentValues dados;
 
         if(nota.getId() == null) {
             nota.setId(geraUUID());
             dados = getDados(nota);
-            db.insert("notas", null, dados);
+            database.insert("notas", null, dados);
+        } else if(option == COD_RESTAURA_NOTA) {
+            dados = getDados(nota);
+            database.insert("notas", null, dados);
         } else {
             dados = getDados(nota);
-            db.update("notas", dados, "id = ?", new String[] {nota.getId()});
+            database.update("notas", dados, "id = ?", new String[] {nota.getId()});
         }
     }
 
@@ -60,9 +51,8 @@ public class NotasDao extends SQLiteOpenHelper {
 
     public List<Nota> findByFilter(String titulo) {
         String sql = "SELECT * FROM notas WHERE titulo LIKE ?";
-        SQLiteDatabase db = getReadableDatabase();
         String search = "%" + titulo + "%";
-        Cursor c = db.rawQuery(sql, new String[] {search});
+        Cursor c = database.rawQuery(sql, new String[] {search});
         List<Nota> notas = populaNotas(c);
         c.close();
         return notas;
@@ -70,8 +60,7 @@ public class NotasDao extends SQLiteOpenHelper {
 
     public List<Nota> findAll() {
         String sql = "SELECT * FROM notas;";
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery(sql, null);
+        Cursor c = database.rawQuery(sql, null);
         List<Nota> notas = populaNotas(c);
         c.close();
         return notas;
@@ -91,12 +80,13 @@ public class NotasDao extends SQLiteOpenHelper {
     }
 
     public void delete(Nota nota) {
-        SQLiteDatabase db = getWritableDatabase();
         String[] params = {nota.getId()};
-        db.delete("notas", "id = ?", params);
+        new LixeiraDao(context).save(nota);
+        database.delete("notas", "id = ?", params);
     }
 
     private String geraUUID() {
         return UUID.randomUUID().toString();
     }
+
 }

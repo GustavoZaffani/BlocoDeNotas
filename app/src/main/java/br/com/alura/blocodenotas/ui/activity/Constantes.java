@@ -7,4 +7,5 @@ public interface Constantes {
     int POSICAO_INVALIDA = -1;
     int COD_REQ_INSERE_NOTA = 1;
     int COD_REQ_ALTERA_NOTA = 2;
+    int COD_RESTAURA_NOTA = 1;
 }

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/menu_form_delete"
-        android:title="Salvar nota"
-        android:icon="@mipmap/ic_action_salva_nota"
+        android:title="Limpar Lixeira"
+        android:icon="@drawable/eraser_branco"
         app:showAsAction="always"/>
 </menu>

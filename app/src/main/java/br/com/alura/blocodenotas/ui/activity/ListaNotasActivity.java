@@ -52,7 +52,6 @@ public class ListaNotasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_notas);
         setTitle(TITULO_APPBAR);
 
-        carregaNotas();
         goToNewForm();
         goToFilter();
         goToLixeira();
@@ -71,6 +70,7 @@ public class ListaNotasActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        carregaNotas();
         if(loader != null && loader.isShowing()) {
             loader.dismiss();
         }
@@ -81,7 +81,7 @@ public class ListaNotasActivity extends AppCompatActivity {
         dao = new NotasDao(this);
         notas = dao.findAll();
         configuraRecyclerView(notas);
-        dao.close();
+        //dao.close();
     }
 
     private void configuraRecyclerView(List<Nota> notas) {
@@ -118,8 +118,6 @@ public class ListaNotasActivity extends AppCompatActivity {
                                 carregaNotas();
                                 loader.dismiss();
                                 Toast.makeText(ListaNotasActivity.this, "Registro excluído!", Toast.LENGTH_SHORT).show();
-                                Intent teste = new Intent(ListaNotasActivity.this, LixeiraActivity.class);
-                                startActivity(teste);
                         }).build().show();
             }
         });
@@ -167,7 +165,7 @@ public class ListaNotasActivity extends AppCompatActivity {
         if(ehInsereNota(requestCode, data)) {
             if(resultCode == Activity.RESULT_OK) {
                 Nota notaRecebida = (Nota) data.getSerializableExtra(CHAVE_NOTA);
-                dao.save(notaRecebida);
+                dao.save(notaRecebida, 0);
                 carregaNotas();
                 adapter.adicionaNota();
                 Toast.makeText(ListaNotasActivity.this, "Salvo com sucesso!", Toast.LENGTH_SHORT).show();
@@ -179,14 +177,14 @@ public class ListaNotasActivity extends AppCompatActivity {
                 int posicaoRecebida = data.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
 
                 if(posicaoRecebida > POSICAO_INVALIDA) {
-                    dao.save(notaRecebida);
+                    dao.save(notaRecebida, 0);
                 }
                 carregaNotas();
                 Toast.makeText(ListaNotasActivity.this, "Alterado com sucesso!", Toast.LENGTH_SHORT).show();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-        dao.close();
+        //dao.close();
     }
 
     private boolean ehAlteraNota(int requestCode, Intent data) {
