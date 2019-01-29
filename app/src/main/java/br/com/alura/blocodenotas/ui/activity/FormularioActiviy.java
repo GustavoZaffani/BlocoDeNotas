@@ -47,7 +47,7 @@ public class FormularioActiviy extends AppCompatActivity {
     private void preencheForm() {
         inicializaCampos();
         Intent infRecebido = getIntent();
-        if(infRecebido.hasExtra(CHAVE_NOTA)) {
+        if (infRecebido.hasExtra(CHAVE_NOTA)) {
             setTitle(TITLE_APPBAR_EDIT);
             notaRecebida = (Nota) infRecebido.getSerializableExtra(CHAVE_NOTA);
             posicaoRecebida = infRecebido.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
@@ -73,13 +73,13 @@ public class FormularioActiviy extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.menu_form_delete) {
+        if (item.getItemId() == R.id.menu_form_delete) {
 
             Nota notaRetornada = criaNota();
 
-            if(validaCampos()) {
+            if (validaCampos()) {
                 new DialogLoading(this, "Salvando...").build().show();
-                if(notaRecebida.getId() != null) {
+                if (notaRecebida.getId() != null) {
                     notaRetornada.setId(notaRecebida.getId());
                 }
                 retornaNota(notaRetornada);
@@ -129,10 +129,10 @@ public class FormularioActiviy extends AppCompatActivity {
     }
 
     private Boolean validaCampos() {
-        if(TextUtils.isEmpty(titulo.getText().toString())) {
+        if (TextUtils.isEmpty(titulo.getText().toString())) {
             titulo.requestFocus();
             return false;
-        } else if(TextUtils.isEmpty(descricao.getText().toString())) {
+        } else if (TextUtils.isEmpty(descricao.getText().toString())) {
             titulo.requestFocus();
             return false;
         } else return true;

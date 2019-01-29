@@ -2,10 +2,10 @@
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dlg_options"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:padding="18dp"
-    android:id="@+id/dlg_options">
+    android:padding="18dp">
 
     <TextView
         android:id="@+id/dlg_options_txt"

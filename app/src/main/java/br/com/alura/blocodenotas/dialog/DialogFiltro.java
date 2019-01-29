@@ -43,7 +43,7 @@ public class DialogFiltro extends AlertDialog.Builder {
         return this;
     }
 
-    public Dialog build(){
+    public Dialog build() {
         return this.create();
     }
 }

@@ -13,7 +13,7 @@ public class DBUtil extends SQLiteOpenHelper {
     }
 
     public static DBUtil getInstance(Context context) {
-        if(dbInstance == null) {
+        if (dbInstance == null) {
             dbInstance = new DBUtil(context);
         }
         return dbInstance;
@@ -39,7 +39,7 @@ public class DBUtil extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        switch (oldVersion){
+        switch (oldVersion) {
             case 1:
                 String sql = "CREATE TABLE lixeira (" +
                         "id CHAR(36) PRIMARY KEY ," +

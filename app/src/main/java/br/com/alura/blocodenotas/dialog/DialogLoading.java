@@ -20,11 +20,11 @@ public class DialogLoading extends AlertDialog.Builder implements Serializable {
         this.setCancelable(false);
 
         View e = LayoutInflater.from(context).inflate(R.layout.dialog_aguarde, null);
-        ((TextView)e.findViewById(R.id.txt_header)).setText(msg);
+        ((TextView) e.findViewById(R.id.txt_header)).setText(msg);
         this.setCustomTitle(e);
     }
 
-    public Dialog build(){
+    public Dialog build() {
         return this.create();
     }
 }

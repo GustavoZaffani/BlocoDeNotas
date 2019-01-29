@@ -15,7 +15,8 @@ public class Lixeira implements Serializable {
         this.data = data;
     }
 
-    public Lixeira() {}
+    public Lixeira() {
+    }
 
     public String getId() {
         return id;

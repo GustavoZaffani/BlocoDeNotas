@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -35,9 +35,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:textSize="13sp"
-            app:layout_constraintTop_toBottomOf="@id/item_nota_titulo"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="31/12/2018 - 09:38"/>
+            app:layout_constraintTop_toBottomOf="@id/item_nota_titulo"
+            tools:text="31/12/2018 - 09:38" />
 
     </android.support.constraint.ConstraintLayout>
 

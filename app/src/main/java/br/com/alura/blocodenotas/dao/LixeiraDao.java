@@ -19,11 +19,11 @@ public class LixeiraDao {
     private SQLiteDatabase database;
 
     public LixeiraDao(Context context) {
-         this.context = context;
-         this.database = DBUtil.getInstance(context).getWritableDatabase();
+        this.context = context;
+        this.database = DBUtil.getInstance(context).getWritableDatabase();
     }
 
-    public void save (Nota nota) {
+    public void save(Nota nota) {
         ContentValues dados;
         dados = getDados(nota);
         database.insert("lixeira", null, dados);
@@ -38,7 +38,7 @@ public class LixeiraDao {
 
     private List<Lixeira> populaLixeira(Cursor c) {
         List<Lixeira> notasExcluidas = new ArrayList<Lixeira>();
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
             Lixeira lixeira = new Lixeira();
             lixeira.setId(c.getString(c.getColumnIndex("id")));
             lixeira.setTitulo(c.getString(c.getColumnIndex("titulo")));
@@ -58,12 +58,12 @@ public class LixeiraDao {
         return dados;
     }
 
-    public void delete (Lixeira lixeira) {
+    public void delete(Lixeira lixeira) {
         String[] params = {lixeira.getId()};
         database.delete("lixeira", "id = ?", params);
     }
 
-    public void restaurarNota (Lixeira lixeira) {
+    public void restaurarNota(Lixeira lixeira) {
         Nota notaRetornada = transformationToNota(lixeira);
         new NotasDao(context).save(notaRetornada, COD_RESTAURA_NOTA);
         delete(lixeira);

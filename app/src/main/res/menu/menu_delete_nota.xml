@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_form_delete"
-        android:title="Limpar Lixeira"
+    <item
+        android:id="@+id/menu_form_delete"
         android:icon="@drawable/eraser_branco"
-        app:showAsAction="always"/>
+        android:title="Limpar Lixeira"
+        app:showAsAction="always" />
 </menu>

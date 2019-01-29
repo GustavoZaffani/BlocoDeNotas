@@ -26,16 +26,16 @@ public class NotasDao {
     public void save(Nota nota, int option) {
         ContentValues dados;
 
-        if(nota.getId() == null) {
+        if (nota.getId() == null) {
             nota.setId(geraUUID());
             dados = getDados(nota);
             database.insert("notas", null, dados);
-        } else if(option == COD_RESTAURA_NOTA) {
+        } else if (option == COD_RESTAURA_NOTA) {
             dados = getDados(nota);
             database.insert("notas", null, dados);
         } else {
             dados = getDados(nota);
-            database.update("notas", dados, "id = ?", new String[] {nota.getId()});
+            database.update("notas", dados, "id = ?", new String[]{nota.getId()});
         }
     }
 
@@ -51,7 +51,7 @@ public class NotasDao {
     public List<Nota> findByFilter(String titulo) {
         String sql = "SELECT * FROM notas WHERE titulo LIKE ?";
         String search = "%" + titulo + "%";
-        Cursor c = database.rawQuery(sql, new String[] {search});
+        Cursor c = database.rawQuery(sql, new String[]{search});
         List<Nota> notas = populaNotas(c);
         c.close();
         return notas;
@@ -67,7 +67,7 @@ public class NotasDao {
 
     private List<Nota> populaNotas(Cursor c) {
         List<Nota> notas = new ArrayList<Nota>();
-        while(c.moveToNext()) {
+        while (c.moveToNext()) {
             Nota nota = new Nota();
             nota.setId(c.getString(c.getColumnIndex("id")));
             nota.setTitulo(c.getString(c.getColumnIndex("titulo")));

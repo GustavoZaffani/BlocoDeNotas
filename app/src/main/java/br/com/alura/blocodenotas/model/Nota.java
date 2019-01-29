@@ -17,7 +17,8 @@ public class Nota implements Serializable {
         this.data = data;
     }
 
-    public Nota() {}
+    public Nota() {
+    }
 
     public String getId() {
         return id;

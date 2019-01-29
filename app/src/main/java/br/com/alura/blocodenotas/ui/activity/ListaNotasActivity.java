@@ -3,10 +3,8 @@ package br.com.alura.blocodenotas.ui.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -71,7 +69,7 @@ public class ListaNotasActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         carregaNotas();
-        if(loader != null && loader.isShowing()) {
+        if (loader != null && loader.isShowing()) {
             loader.dismiss();
         }
         super.onResume();
@@ -103,21 +101,21 @@ public class ListaNotasActivity extends AppCompatActivity {
                         .setSim("Editar")
                         .setNao("Excluir")
                         .setOnSimListener((dialog, which) -> {
-                                loader = new DialogLoading(ListaNotasActivity.this, "Carregando...").build();
-                                loader.show();
-                                Intent goToEdit = new Intent(ListaNotasActivity.this, FormularioActiviy.class);
-                                goToEdit.putExtra(CHAVE_NOTA, nota);
-                                goToEdit.putExtra(CHAVE_POSICAO, posicao);
-                                startActivityForResult(goToEdit, COD_REQ_ALTERA_NOTA);
+                            loader = new DialogLoading(ListaNotasActivity.this, "Carregando...").build();
+                            loader.show();
+                            Intent goToEdit = new Intent(ListaNotasActivity.this, FormularioActiviy.class);
+                            goToEdit.putExtra(CHAVE_NOTA, nota);
+                            goToEdit.putExtra(CHAVE_POSICAO, posicao);
+                            startActivityForResult(goToEdit, COD_REQ_ALTERA_NOTA);
                         })
                         .setOnNaoListener((dialog, which) -> {
-                                dao = new NotasDao(ListaNotasActivity.this);
-                                loader = new DialogLoading(ListaNotasActivity.this, "Excluindo...").build();
-                                loader.show();
-                                dao.delete(nota);
-                                carregaNotas();
-                                loader.dismiss();
-                                Toast.makeText(ListaNotasActivity.this, "Registro excluído!", Toast.LENGTH_SHORT).show();
+                            dao = new NotasDao(ListaNotasActivity.this);
+                            loader = new DialogLoading(ListaNotasActivity.this, "Excluindo...").build();
+                            loader.show();
+                            dao.delete(nota);
+                            carregaNotas();
+                            loader.dismiss();
+                            Toast.makeText(ListaNotasActivity.this, "Registro excluído!", Toast.LENGTH_SHORT).show();
                         }).build().show();
             }
         });
@@ -133,9 +131,11 @@ public class ListaNotasActivity extends AppCompatActivity {
                         .setCancelar("CANCELAR")
                         .setOnFiltrarListener(((dialog, which) -> {
                             texto = ((Dialog) dialog).findViewById(R.id.dlg_filtro_edt_txt);
-                            if(!TextUtils.isEmpty(texto.getText().toString())) {
+                            if (!TextUtils.isEmpty(texto.getText().toString())) {
                                 List<Nota> notas = dao.findByFilter(texto.getText().toString());
-                                configuraRecyclerView(notas);
+                                if (validaFiltro(notas)) {
+                                    configuraRecyclerView(notas);
+                                }
                             } else {
                                 carregaNotas();
                             }
@@ -146,6 +146,20 @@ public class ListaNotasActivity extends AppCompatActivity {
                         .build().show();
             }
         });
+    }
+
+    private Boolean validaFiltro(List<Nota> notas) {
+        if (notas.size() == 0) {
+            new DialogBack(ListaNotasActivity.this)
+                    .setTitle("Ops...")
+                    .setMsg("Nenhum resultado encontrado!")
+                    .setSim("Ok")
+                    .setOnSimListener(((dialog, which) -> dialog.dismiss()))
+                    .build().show();
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private void goToNewForm() {
@@ -162,8 +176,8 @@ public class ListaNotasActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         dao = new NotasDao(this);
-        if(ehInsereNota(requestCode, data)) {
-            if(resultCode == Activity.RESULT_OK) {
+        if (ehInsereNota(requestCode, data)) {
+            if (resultCode == Activity.RESULT_OK) {
                 Nota notaRecebida = (Nota) data.getSerializableExtra(CHAVE_NOTA);
                 dao.save(notaRecebida, 0);
                 carregaNotas();
@@ -171,12 +185,12 @@ public class ListaNotasActivity extends AppCompatActivity {
                 Toast.makeText(ListaNotasActivity.this, "Salvo com sucesso!", Toast.LENGTH_SHORT).show();
             }
         }
-        if(ehAlteraNota(requestCode, data)) {
-            if(resultCode == Activity.RESULT_OK) {
+        if (ehAlteraNota(requestCode, data)) {
+            if (resultCode == Activity.RESULT_OK) {
                 Nota notaRecebida = (Nota) data.getSerializableExtra(CHAVE_NOTA);
                 int posicaoRecebida = data.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
 
-                if(posicaoRecebida > POSICAO_INVALIDA) {
+                if (posicaoRecebida > POSICAO_INVALIDA) {
                     dao.save(notaRecebida, 0);
                 }
                 carregaNotas();

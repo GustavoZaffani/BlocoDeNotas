@@ -43,9 +43,9 @@ public class LixeiraActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.menu_form_delete) {
+        if (item.getItemId() == R.id.menu_form_delete) {
 
-            if(validaLixeira()) {
+            if (validaLixeira()) {
                 new DialogBack(this)
                         .setSim("Sim")
                         .setNao("Não")
@@ -68,7 +68,7 @@ public class LixeiraActivity extends AppCompatActivity {
     }
 
     private Boolean validaLixeira() {
-        if(dao.findAll().size() == 0) {
+        if (dao.findAll().size() == 0) {
             new DialogBack(LixeiraActivity.this)
                     .setTitle("Atenção")
                     .setMsg("A lixeira está vazia!")
@@ -87,7 +87,7 @@ public class LixeiraActivity extends AppCompatActivity {
         configuraRecyclerView(notasEx);
     }
 
-    private void configuraRecyclerView (List<Lixeira> notas) {
+    private void configuraRecyclerView(List<Lixeira> notas) {
         RecyclerView listaNotas = findViewById(R.id.lista_notas_excluidas_recyclerView);
         configuraAdapter(notas, listaNotas);
     }

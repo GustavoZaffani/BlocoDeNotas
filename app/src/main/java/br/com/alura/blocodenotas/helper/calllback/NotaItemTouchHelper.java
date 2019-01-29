@@ -51,12 +51,12 @@ public class NotaItemTouchHelper extends ItemTouchHelper.Callback {
                 .setTitle("Atenção")
                 .setMsg("Tem certeza que deseja excluir essa nota?")
                 .setOnSimListener((dialog, which) -> {
-                        List<Nota> notas = new NotasDao(context).findAll();
-                        Toast.makeText(context, "Lista recarregada", Toast.LENGTH_SHORT).show();
+                    List<Nota> notas = new NotasDao(context).findAll();
+                    Toast.makeText(context, "Lista recarregada", Toast.LENGTH_SHORT).show();
                 })
                 .setOnNaoListener((dialog, which) -> {
 
-                        dialog.dismiss();
+                    dialog.dismiss();
                 })
                 .build().show();
     }
