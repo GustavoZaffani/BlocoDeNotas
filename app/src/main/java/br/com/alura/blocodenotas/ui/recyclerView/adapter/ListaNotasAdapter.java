@@ -3,7 +3,6 @@ package br.com.alura.blocodenotas.ui.recyclerView.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,11 +37,6 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         return new NotaViewHolder(viewCriada);
     }
 
-    public void altera(int posicao, Nota nota) {
-        notas.set(posicao, nota);
-        notifyDataSetChanged();
-    }
-
     @Override
     public void onBindViewHolder(@NonNull ListaNotasAdapter.NotaViewHolder notaViewHolder, int i) {
         Nota nota = notas.get(i);
@@ -69,7 +63,6 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
                 @Override
                 public void onClick(View v) {
                     onItemClickListener.onItemClick(nota, getAdapterPosition());
-                    Log.i("aqui uma nota", nota.getTitulo());
                 }
             });
         }

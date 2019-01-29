@@ -82,4 +82,11 @@ public class LixeiraDao {
         String sql = "DELETE FROM lixeira;";
         database.execSQL(sql);
     }
+
+    public void restaurarTudo() {
+        List<Lixeira> notas = findAll();
+        for (int i = 0; i < notas.size(); i++) {
+            restaurarNota(notas.get(i));
+        }
+    }
 }

@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_restore_all"
+        android:title="Restaurar Tudo"
+        android:icon="@drawable/ic_restore_black_24dp"
+        app:showAsAction="always"/>
+
     <item
         android:id="@+id/menu_form_delete"
-        android:icon="@drawable/eraser_branco"
+        android:icon="@drawable/ic_delete_black_24dp"
         android:title="Limpar Lixeira"
         app:showAsAction="always" />
 </menu>

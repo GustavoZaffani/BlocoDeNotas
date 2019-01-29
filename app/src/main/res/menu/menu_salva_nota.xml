@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_form_clean"
+        android:icon="@drawable/eraser_branco"
+        android:title="Limpar Campos"
+        app:showAsAction="always"/>
+
     <item
         android:id="@+id/menu_form_delete"
         android:icon="@mipmap/ic_action_salva_nota"

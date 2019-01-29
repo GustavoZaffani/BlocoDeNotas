@@ -73,8 +73,8 @@ public class FormularioActiviy extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_form_delete) {
 
+        if (item.getItemId() == R.id.menu_form_delete) {
             Nota notaRetornada = criaNota();
 
             if (validaCampos()) {
@@ -92,6 +92,11 @@ public class FormularioActiviy extends AppCompatActivity {
                         .setOnSimListener(((dialog, which) -> dialog.dismiss()))
                         .build().show();
             }
+        }
+
+        if (item.getItemId() == R.id.menu_form_clean) {
+            titulo.setText("");
+            descricao.setText("");
         }
         return super.onOptionsItemSelected(item);
     }

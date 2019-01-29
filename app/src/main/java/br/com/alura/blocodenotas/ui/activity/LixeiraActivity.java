@@ -3,11 +3,8 @@ package br.com.alura.blocodenotas.ui.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.List;
@@ -43,6 +40,7 @@ public class LixeiraActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         if (item.getItemId() == R.id.menu_form_delete) {
 
             if (validaLixeira()) {
@@ -64,6 +62,28 @@ public class LixeiraActivity extends AppCompatActivity {
                         .build().show();
             }
         }
+
+        if (validaLixeira()) {
+            if (item.getItemId() == R.id.menu_restore_all) {
+                new DialogBack(this)
+                        .setSim("Sim")
+                        .setNao("Não")
+                        .setTitle("Atenção")
+                        .setMsg("Tem certeza que deseja restaurar todas as notas?")
+                        .setOnSimListener(((dialog, which) -> {
+                            if (dao.findAll().size() > 1) {
+                                Toast.makeText(LixeiraActivity.this, "Notas restauradas!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(LixeiraActivity.this, "Nota restaurada!", Toast.LENGTH_SHORT).show();
+                            }
+                            dao.restaurarTudo();
+                            carregaExcluidas();
+                        }))
+                        .setOnNaoListener(((dialog, which) -> dialog.dismiss()))
+                        .build().show();
+            }
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -118,6 +138,5 @@ public class LixeiraActivity extends AppCompatActivity {
             }
         });
     }
-
 }
 
