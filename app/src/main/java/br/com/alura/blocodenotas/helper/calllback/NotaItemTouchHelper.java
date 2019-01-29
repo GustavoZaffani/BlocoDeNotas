@@ -46,10 +46,7 @@ public class NotaItemTouchHelper extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         final int posicao = viewHolder.getAdapterPosition();
-//        List<Nota> nota = null;
-//        String titulo = nota.get(viewHolder.getAdapterPosition()).getTitulo();
 
-        Log.i("que porra", String.valueOf(posicao));
         new DialogBack(context)
                 .setTitle("Atenção")
                 .setMsg("Tem certeza que deseja excluir essa nota?")

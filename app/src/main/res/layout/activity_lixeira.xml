@@ -17,6 +17,7 @@
         android:id="@+id/lista_notas_excluidas_recyclerView"
         tools:listitem="@layout/item_excluido">
 
+
     </android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>

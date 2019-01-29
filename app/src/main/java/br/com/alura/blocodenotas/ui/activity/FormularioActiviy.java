@@ -32,8 +32,8 @@ public class FormularioActiviy extends AppCompatActivity {
     public static final String TITLE_APPBAR_EDIT = "Altera nota";
     private EditText titulo = null;
     private EditText descricao = null;
-    private int posicaoRecebida = -1;
     private Nota notaRecebida;
+    private int posicaoRecebida = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

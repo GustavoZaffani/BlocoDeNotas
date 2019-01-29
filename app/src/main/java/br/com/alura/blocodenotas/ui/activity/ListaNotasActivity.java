@@ -3,8 +3,10 @@ package br.com.alura.blocodenotas.ui.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -12,7 +14,6 @@ import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,7 +27,6 @@ import br.com.alura.blocodenotas.dialog.DialogBack;
 import br.com.alura.blocodenotas.dialog.DialogFiltro;
 import br.com.alura.blocodenotas.dialog.DialogLoading;
 import br.com.alura.blocodenotas.helper.calllback.NotaItemTouchHelper;
-import br.com.alura.blocodenotas.model.Lixeira;
 import br.com.alura.blocodenotas.model.Nota;
 import br.com.alura.blocodenotas.ui.recyclerView.adapter.ListaNotasAdapter;
 import br.com.alura.blocodenotas.ui.recyclerView.adapter.listener.OnItemClickListener;
@@ -184,7 +184,6 @@ public class ListaNotasActivity extends AppCompatActivity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-        //dao.close();
     }
 
     private boolean ehAlteraNota(int requestCode, Intent data) {

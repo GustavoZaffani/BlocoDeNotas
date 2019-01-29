@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import br.com.alura.blocodenotas.model.Lixeira;
 import br.com.alura.blocodenotas.model.Nota;
 
 import static br.com.alura.blocodenotas.ui.activity.Constantes.COD_RESTAURA_NOTA;

@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,6 @@ public class LixeiraDao {
     public LixeiraDao(Context context) {
          this.context = context;
          this.database = DBUtil.getInstance(context).getWritableDatabase();
-
     }
 
     public void save (Nota nota) {
@@ -67,21 +65,16 @@ public class LixeiraDao {
 
     public void restaurarNota (Lixeira lixeira) {
         Nota notaRetornada = transformationToNota(lixeira);
-        Log.i("titulo pos transf", notaRetornada.getTitulo());
         new NotasDao(context).save(notaRetornada, COD_RESTAURA_NOTA);
         delete(lixeira);
     }
 
     public Nota transformationToNota(Lixeira lixeira) {
-
-        Log.i("titulo lixeira", lixeira.getTitulo());
-
         Nota notaRestaurada = new Nota();
         notaRestaurada.setId(lixeira.getId());
         notaRestaurada.setData(lixeira.getData());
         notaRestaurada.setDescricao(lixeira.getDescricao());
         notaRestaurada.setTitulo(lixeira.getTitulo());
-
         return notaRestaurada;
     }
 

@@ -1,8 +1,9 @@
 package br.com.alura.blocodenotas.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,8 +33,6 @@ public class LixeiraActivity extends AppCompatActivity {
         setTitle(TITLE_APPBAR);
 
         carregaExcluidas();
-        //configuraBtnRestaurar();
-
     }
 
     @Override
@@ -45,31 +44,41 @@ public class LixeiraActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_form_delete) {
-            new DialogBack(this)
-                    .setSim("Sim")
-                    .setNao("Não")
-                    .setTitle("Atenção")
-                    .setMsg("Tem certeza que deseja limpar a lixeira?")
-                    .setOnSimListener(((dialog, which) -> {
-                        dao.deleteAll();
-                        carregaExcluidas();
-                        Toast.makeText(LixeiraActivity.this, "Registros excluídos!", Toast.LENGTH_SHORT).show();
-                    }))
-                    .setOnNaoListener(((dialog, which) -> dialog.dismiss()))
-                    .build().show();
-        }
 
+            if(validaLixeira()) {
+                new DialogBack(this)
+                        .setSim("Sim")
+                        .setNao("Não")
+                        .setTitle("Atenção")
+                        .setMsg("Tem certeza que deseja limpar a lixeira?")
+                        .setOnSimListener(((dialog, which) -> {
+                            if (dao.findAll().size() > 1) {
+                                Toast.makeText(LixeiraActivity.this, "Registros excluídos!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(LixeiraActivity.this, "Registro excluído!", Toast.LENGTH_SHORT).show();
+                            }
+                            dao.deleteAll();
+                            carregaExcluidas();
+                        }))
+                        .setOnNaoListener(((dialog, which) -> dialog.dismiss()))
+                        .build().show();
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 
-    private void configuraBtnRestaurar() {
-        Button btnRestore = findViewById(R.id.restore);
-        btnRestore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(LixeiraActivity.this, "Bom", Toast.LENGTH_SHORT).show();
-            }
-        });
+    private Boolean validaLixeira() {
+        if(dao.findAll().size() == 0) {
+            new DialogBack(LixeiraActivity.this)
+                    .setTitle("Atenção")
+                    .setMsg("A lixeira está vazia!")
+                    .setSim("OK")
+                    .setOnSimListener(((dialog, which) -> dialog.dismiss()))
+                    .build().show();
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private void carregaExcluidas() {
@@ -90,9 +99,22 @@ public class LixeiraActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemExClickListener() {
             @Override
             public void onItemExClickListener(Lixeira lixeira, int posicao) {
-                dao.restaurarNota(lixeira);
-                carregaExcluidas();
-                Toast.makeText(LixeiraActivity.this, "Nota restaurada", Toast.LENGTH_SHORT).show();
+
+                new DialogBack(LixeiraActivity.this)
+                        .setTitle("Atenção")
+                        .setMsg("Selecione uma opção abaixo:")
+                        .setSim("Restaurar")
+                        .setNao("Excluir")
+                        .setOnSimListener(((dialog, which) -> {
+                            dao.restaurarNota(lixeira);
+                            carregaExcluidas();
+                            Toast.makeText(LixeiraActivity.this, "Nota restaurada", Toast.LENGTH_SHORT).show();
+                        }))
+                        .setOnNaoListener(((dialog, which) -> {
+                            dao.delete(lixeira);
+                            carregaExcluidas();
+                            Toast.makeText(LixeiraActivity.this, "Nota excluída", Toast.LENGTH_SHORT).show();
+                        })).build().show();
             }
         });
     }

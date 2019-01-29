@@ -34,7 +34,7 @@ public class ListaNotasExcAdapter extends RecyclerView.Adapter<ListaNotasExcAdap
     @Override
     public ListaNotasExcAdapter.NotaViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View viewCriada = LayoutInflater.from(context)
-                .inflate(R.layout.item_excluido, viewGroup, false);
+                .inflate(R.layout.item_nota, viewGroup, false);
         return new NotaViewHolder(viewCriada);
     }
 
@@ -82,9 +82,5 @@ public class ListaNotasExcAdapter extends RecyclerView.Adapter<ListaNotasExcAdap
             titulo.setText(nota.getTitulo());
             data.setText(nota.getData());
         }
-    }
-
-    public void adicionaNota() {
-        notifyDataSetChanged();
     }
 }
