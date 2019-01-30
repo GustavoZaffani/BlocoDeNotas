@@ -2,10 +2,60 @@
 
     <string name="app_name">Bloco de Notas</string>
 
-    <string-array name="spinner">
-        <item>título</item>
-        <item>descrição</item>
-    </string-array>
+    <!--Títulos de Dialogs-->
+    <string name="attention">Atenção</string>
+    <string name="loading">Carregando...</string>
+    <string name="excluindo">Excluindo...</string>
+    <string name="saving">Salvando...</string>
+    <string name="ops">Ops...</string>
+
+    <!--Mensangens de Dialogs-->
+    <string name="select_option">Selecione uma opção abaixo:</string>
+    <string name="question_clear_trash">Tem certeza que deseja limpar a lixeira?</string>
+    <string name="question_restore_notes">Tem certeza que deseja restaurar todas as notas?</string>
+    <string name="question_back">Deseja realmente voltar?</string>
+
+    <!--Opções de Dialogs-->
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="ok">Ok</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Excluir</string>
+    <string name="restore">Restaurar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="filter">Filtrar</string>
+
+    <!--Resultados-->
+    <string name="not_found">Nenhum resultado encontrado!</string>
+    <string name="trash_empty">A lixeira está vazia!</string>
+    <string name="required_field">Necessário preencher todos os campos</string>
+    <string name="lost_data">Os dados adicionados serão perdidos</string>
+
+    <!--Toasts-->
+    <string name="register_deleted">Registro excluído!</string>
+    <string name="registers_deleted">Registros excluídos!</string>
+    <string name="saved_sucess">Salvo com sucesso!</string>
+    <string name="updated_sucess">Atualizado com sucesso!</string>
+    <string name="notes_restore">Notas restauradas!</string>
+    <string name="note_restore">Nota restaurada!</string>
+    <string name="deleted_permanently">Nota excluída permanentemente!</string>
+
+    <!--SQL's-->
+    <string name="table_lixeira">lixeira</string>
+    <string name="table_notas">notas</string>
+
+    <string name="column_id">id</string>
+    <string name="column_titulo">titulo</string>
+    <string name="column_descricao">descricao</string>
+    <string name="column_data">data</string>
+
+    <string name="where_id">id = ?</string>
+
+    <string name="find_all_lixeira">SELECT * FROM lixeira;</string>
+    <string name="delete_all_lixeira">DELETE FROM lixeira;</string>
+
+    <string name="find_all_notas">SELECT * FROM notas;</string>
+    <string name="find_where_titulo">SELECT * FROM notas WHERE titulo LIKE ?"</string>
 
 </resources>
 

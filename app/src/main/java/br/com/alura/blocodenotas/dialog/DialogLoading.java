@@ -1,6 +1,5 @@
 package br.com.alura.blocodenotas.dialog;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -14,7 +13,6 @@ import br.com.alura.blocodenotas.R;
 
 public class DialogLoading extends AlertDialog.Builder implements Serializable {
 
-    @SuppressLint("NewApi")
     public DialogLoading(Context context, String msg) {
         super(context);
         this.setCancelable(false);

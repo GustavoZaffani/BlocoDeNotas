@@ -5,9 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 
 import br.com.alura.blocodenotas.R;
 
@@ -15,6 +12,7 @@ public class DialogOptions extends AlertDialog.Builder {
 
     private String editar;
     private String excluir;
+
 
     @SuppressLint("NewApi")
     public DialogOptions(Context context) {

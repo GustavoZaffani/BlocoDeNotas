@@ -49,6 +49,4 @@ public class DBUtil extends SQLiteOpenHelper {
                 db.execSQL(sql);
         }
     }
-
-
 }

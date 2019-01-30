@@ -2,10 +2,10 @@
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dlg_filtro"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:padding="18dp"
-    android:id="@+id/dlg_filtro">
+    android:padding="18dp">
 
     <TextView
         android:id="@+id/dlg_filtro_lb_txt"
@@ -15,8 +15,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:text="Texto para pesquisa"
-        android:textSize="20sp"
         android:textColor="#222d43"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/dlg_filtro" />
 
@@ -25,10 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="5dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:hint="Pesquisar"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

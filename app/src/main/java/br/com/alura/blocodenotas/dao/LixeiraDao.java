@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.alura.blocodenotas.R;
 import br.com.alura.blocodenotas.model.Lixeira;
 import br.com.alura.blocodenotas.model.Nota;
 
@@ -15,22 +16,22 @@ import static br.com.alura.blocodenotas.ui.activity.Constantes.COD_RESTAURA_NOTA
 
 public class LixeiraDao {
 
-    private Context context;
+    private Context ctx;
     private SQLiteDatabase database;
 
     public LixeiraDao(Context context) {
-        this.context = context;
+        this.ctx = context;
         this.database = DBUtil.getInstance(context).getWritableDatabase();
     }
 
     public void save(Nota nota) {
         ContentValues dados;
         dados = getDados(nota);
-        database.insert("lixeira", null, dados);
+        database.insert(ctx.getString(R.string.table_lixeira), null, dados);
     }
 
     public List<Lixeira> findAll() {
-        String sql = "SELECT * FROM lixeira;";
+        String sql = ctx.getString(R.string.find_all_lixeira);
         Cursor c = database.rawQuery(sql, null);
         List<Lixeira> notasExcluidas = populaLixeira(c);
         return notasExcluidas;
@@ -40,10 +41,10 @@ public class LixeiraDao {
         List<Lixeira> notasExcluidas = new ArrayList<Lixeira>();
         while (c.moveToNext()) {
             Lixeira lixeira = new Lixeira();
-            lixeira.setId(c.getString(c.getColumnIndex("id")));
-            lixeira.setTitulo(c.getString(c.getColumnIndex("titulo")));
-            lixeira.setDescricao(c.getString(c.getColumnIndex("descricao")));
-            lixeira.setData(c.getString(c.getColumnIndex("data")));
+            lixeira.setId(c.getString(c.getColumnIndex(ctx.getString(R.string.column_id))));
+            lixeira.setTitulo(c.getString(c.getColumnIndex(ctx.getString(R.string.column_titulo))));
+            lixeira.setDescricao(c.getString(c.getColumnIndex(ctx.getString(R.string.column_descricao))));
+            lixeira.setData(c.getString(c.getColumnIndex(ctx.getString(R.string.column_data))));
             notasExcluidas.add(lixeira);
         }
         return notasExcluidas;
@@ -51,21 +52,21 @@ public class LixeiraDao {
 
     private ContentValues getDados(Nota nota) {
         ContentValues dados = new ContentValues();
-        dados.put("id", nota.getId());
-        dados.put("titulo", nota.getTitulo());
-        dados.put("descricao", nota.getDescricao());
-        dados.put("data", nota.getData());
+        dados.put(ctx.getString(R.string.column_id), nota.getId());
+        dados.put(ctx.getString(R.string.column_titulo), nota.getTitulo());
+        dados.put(ctx.getString(R.string.column_descricao), nota.getDescricao());
+        dados.put(ctx.getString(R.string.column_data), nota.getData());
         return dados;
     }
 
     public void delete(Lixeira lixeira) {
         String[] params = {lixeira.getId()};
-        database.delete("lixeira", "id = ?", params);
+        database.delete(ctx.getString(R.string.table_lixeira), ctx.getString(R.string.where_id), params);
     }
 
     public void restaurarNota(Lixeira lixeira) {
         Nota notaRetornada = transformationToNota(lixeira);
-        new NotasDao(context).save(notaRetornada, COD_RESTAURA_NOTA);
+        new NotasDao(ctx).save(notaRetornada, COD_RESTAURA_NOTA);
         delete(lixeira);
     }
 
@@ -79,7 +80,7 @@ public class LixeiraDao {
     }
 
     public void deleteAll() {
-        String sql = "DELETE FROM lixeira;";
+        String sql = ctx.getString(R.string.delete_all_lixeira);
         database.execSQL(sql);
     }
 

@@ -1,13 +1,9 @@
 package br.com.alura.blocodenotas.helper.calllback;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -15,7 +11,6 @@ import java.util.List;
 import br.com.alura.blocodenotas.dao.NotasDao;
 import br.com.alura.blocodenotas.dialog.DialogBack;
 import br.com.alura.blocodenotas.model.Nota;
-import br.com.alura.blocodenotas.ui.activity.ListaNotasActivity;
 import br.com.alura.blocodenotas.ui.recyclerView.adapter.ListaNotasAdapter;
 
 public class NotaItemTouchHelper extends ItemTouchHelper.Callback {

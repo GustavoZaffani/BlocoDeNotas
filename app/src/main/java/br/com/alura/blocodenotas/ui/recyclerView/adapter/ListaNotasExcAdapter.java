@@ -3,7 +3,6 @@ package br.com.alura.blocodenotas.ui.recyclerView.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,11 +35,6 @@ public class ListaNotasExcAdapter extends RecyclerView.Adapter<ListaNotasExcAdap
         View viewCriada = LayoutInflater.from(context)
                 .inflate(R.layout.item_nota, viewGroup, false);
         return new NotaViewHolder(viewCriada);
-    }
-
-    public void altera(int posicao, Lixeira nota) {
-        notasExcluidas.set(posicao, nota);
-        notifyDataSetChanged();
     }
 
     @Override

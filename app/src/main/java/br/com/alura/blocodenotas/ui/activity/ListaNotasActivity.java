@@ -2,6 +2,7 @@ package br.com.alura.blocodenotas.ui.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -43,27 +44,18 @@ public class ListaNotasActivity extends AppCompatActivity {
     private List<Nota> notas;
     private Dialog loader;
     private EditText texto;
+    private Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_notas);
         setTitle(TITULO_APPBAR);
+        ctx = this;
 
         goToNewForm();
         goToFilter();
         goToLixeira();
-    }
-
-    private void goToLixeira() {
-        FloatingActionButton openLixeira = findViewById(R.id.lista_btn_lixeira);
-        openLixeira.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goLixeira = new Intent(ListaNotasActivity.this, LixeiraActivity.class);
-                startActivity(goLixeira);
-            }
-        });
     }
 
     @Override
@@ -79,7 +71,6 @@ public class ListaNotasActivity extends AppCompatActivity {
         dao = new NotasDao(this);
         notas = dao.findAll();
         configuraRecyclerView(notas);
-        //dao.close();
     }
 
     private void configuraRecyclerView(List<Nota> notas) {
@@ -95,13 +86,13 @@ public class ListaNotasActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Nota nota, int posicao) {
-                new DialogBack(ListaNotasActivity.this)
-                        .setTitle("Atenção")
-                        .setMsg("Selecione uma opção abaixo: ")
-                        .setSim("Editar")
-                        .setNao("Excluir")
+                new DialogBack(ctx)
+                        .setTitle(ctx.getString(R.string.attention))
+                        .setMsg(ctx.getString(R.string.select_option))
+                        .setSim(ctx.getString(R.string.edit))
+                        .setNao(ctx.getString(R.string.delete))
                         .setOnSimListener((dialog, which) -> {
-                            loader = new DialogLoading(ListaNotasActivity.this, "Carregando...").build();
+                            loader = new DialogLoading(ListaNotasActivity.this, ctx.getString(R.string.loading)).build();
                             loader.show();
                             Intent goToEdit = new Intent(ListaNotasActivity.this, FormularioActiviy.class);
                             goToEdit.putExtra(CHAVE_NOTA, nota);
@@ -110,13 +101,24 @@ public class ListaNotasActivity extends AppCompatActivity {
                         })
                         .setOnNaoListener((dialog, which) -> {
                             dao = new NotasDao(ListaNotasActivity.this);
-                            loader = new DialogLoading(ListaNotasActivity.this, "Excluindo...").build();
+                            loader = new DialogLoading(ListaNotasActivity.this, ctx.getString(R.string.excluindo)).build();
                             loader.show();
                             dao.delete(nota);
                             carregaNotas();
                             loader.dismiss();
-                            Toast.makeText(ListaNotasActivity.this, "Registro excluído!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ListaNotasActivity.this, ctx.getString(R.string.register_deleted), Toast.LENGTH_SHORT).show();
                         }).build().show();
+            }
+        });
+    }
+
+    private void goToLixeira() {
+        FloatingActionButton openLixeira = findViewById(R.id.lista_btn_lixeira);
+        openLixeira.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goLixeira = new Intent(ListaNotasActivity.this, LixeiraActivity.class);
+                startActivity(goLixeira);
             }
         });
     }
@@ -127,8 +129,8 @@ public class ListaNotasActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new DialogFiltro(ListaNotasActivity.this)
-                        .setFiltrar("FILTRAR")
-                        .setCancelar("CANCELAR")
+                        .setFiltrar(ctx.getString(R.string.filter))
+                        .setCancelar(ctx.getString(R.string.cancel))
                         .setOnFiltrarListener(((dialog, which) -> {
                             texto = ((Dialog) dialog).findViewById(R.id.dlg_filtro_edt_txt);
                             if (!TextUtils.isEmpty(texto.getText().toString())) {
@@ -148,20 +150,6 @@ public class ListaNotasActivity extends AppCompatActivity {
         });
     }
 
-    private Boolean validaFiltro(List<Nota> notas) {
-        if (notas.size() == 0) {
-            new DialogBack(ListaNotasActivity.this)
-                    .setTitle("Ops...")
-                    .setMsg("Nenhum resultado encontrado!")
-                    .setSim("Ok")
-                    .setOnSimListener(((dialog, which) -> dialog.dismiss()))
-                    .build().show();
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     private void goToNewForm() {
         FloatingActionButton newNote = findViewById(R.id.lista_btn_novo);
         newNote.setOnClickListener(new View.OnClickListener() {
@@ -173,6 +161,20 @@ public class ListaNotasActivity extends AppCompatActivity {
         });
     }
 
+    private Boolean validaFiltro(List<Nota> notas) {
+        if (notas.size() == 0) {
+            new DialogBack(ListaNotasActivity.this)
+                    .setTitle(ctx.getString(R.string.ops))
+                    .setMsg(ctx.getString(R.string.not_found))
+                    .setSim(ctx.getString(R.string.ok))
+                    .setOnSimListener(((dialog, which) -> dialog.dismiss()))
+                    .build().show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         dao = new NotasDao(this);
@@ -182,7 +184,7 @@ public class ListaNotasActivity extends AppCompatActivity {
                 dao.save(notaRecebida, 0);
                 carregaNotas();
                 adapter.adicionaNota();
-                Toast.makeText(ListaNotasActivity.this, "Salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListaNotasActivity.this, ctx.getString(R.string.saved_sucess), Toast.LENGTH_SHORT).show();
             }
         }
         if (ehAlteraNota(requestCode, data)) {
@@ -194,7 +196,7 @@ public class ListaNotasActivity extends AppCompatActivity {
                     dao.save(notaRecebida, 0);
                 }
                 carregaNotas();
-                Toast.makeText(ListaNotasActivity.this, "Alterado com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListaNotasActivity.this, ctx.getString(R.string.updated_sucess), Toast.LENGTH_SHORT).show();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

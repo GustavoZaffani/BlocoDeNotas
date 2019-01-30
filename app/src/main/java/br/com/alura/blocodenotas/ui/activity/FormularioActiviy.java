@@ -2,6 +2,7 @@ package br.com.alura.blocodenotas.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -34,11 +35,13 @@ public class FormularioActiviy extends AppCompatActivity {
     private EditText descricao = null;
     private Nota notaRecebida;
     private int posicaoRecebida = -1;
+    private Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_activiy);
+        ctx = this;
 
         setTitle(TITLE_APPBAR_INSERT);
         preencheForm();
@@ -78,7 +81,7 @@ public class FormularioActiviy extends AppCompatActivity {
             Nota notaRetornada = criaNota();
 
             if (validaCampos()) {
-                new DialogLoading(this, "Salvando...").build().show();
+                new DialogLoading(this, ctx.getString(R.string.saving)).build().show();
                 if (notaRecebida.getId() != null) {
                     notaRetornada.setId(notaRecebida.getId());
                 }
@@ -86,9 +89,9 @@ public class FormularioActiviy extends AppCompatActivity {
                 finish();
             } else {
                 new DialogBack(this)
-                        .setTitle("Atenção")
-                        .setMsg("Necessário preencher todos os campos")
-                        .setSim("OK")
+                        .setTitle(ctx.getString(R.string.attention))
+                        .setMsg(ctx.getString(R.string.required_field))
+                        .setSim(ctx.getString(R.string.ok))
                         .setOnSimListener(((dialog, which) -> dialog.dismiss()))
                         .build().show();
             }
@@ -104,8 +107,8 @@ public class FormularioActiviy extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         new DialogBack(FormularioActiviy.this)
-                .setTitle("Deseja realmente voltar?")
-                .setMsg("Os dados adicionados serão perdidos")
+                .setTitle(ctx.getString(R.string.question_back))
+                .setMsg(ctx.getString(R.string.lost_data))
                 .setOnNaoListener(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
