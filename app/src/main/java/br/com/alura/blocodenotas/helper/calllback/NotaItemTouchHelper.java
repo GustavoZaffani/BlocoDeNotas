@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import br.com.alura.blocodenotas.R;
 import br.com.alura.blocodenotas.dao.NotasDao;
 import br.com.alura.blocodenotas.dialog.DialogBack;
 import br.com.alura.blocodenotas.model.Nota;
@@ -43,14 +44,12 @@ public class NotaItemTouchHelper extends ItemTouchHelper.Callback {
         final int posicao = viewHolder.getAdapterPosition();
 
         new DialogBack(context)
-                .setTitle("Atenção")
-                .setMsg("Tem certeza que deseja excluir essa nota?")
+                .setTitle(context.getString(R.string.attention))
+                .setMsg(context.getString(R.string.sure_deleted))
                 .setOnSimListener((dialog, which) -> {
                     List<Nota> notas = new NotasDao(context).findAll();
-                    Toast.makeText(context, "Lista recarregada", Toast.LENGTH_SHORT).show();
                 })
                 .setOnNaoListener((dialog, which) -> {
-
                     dialog.dismiss();
                 })
                 .build().show();

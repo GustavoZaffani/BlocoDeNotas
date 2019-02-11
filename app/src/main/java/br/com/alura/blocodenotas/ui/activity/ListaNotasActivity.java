@@ -44,14 +44,12 @@ public class ListaNotasActivity extends AppCompatActivity {
     private List<Nota> notas;
     private Dialog loader;
     private EditText texto;
-    private Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_notas);
         setTitle(TITULO_APPBAR);
-        ctx = this;
 
         goToNewForm();
         goToFilter();
@@ -86,13 +84,13 @@ public class ListaNotasActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Nota nota, int posicao) {
-                new DialogBack(ctx)
-                        .setTitle(ctx.getString(R.string.attention))
-                        .setMsg(ctx.getString(R.string.select_option))
-                        .setSim(ctx.getString(R.string.edit))
-                        .setNao(ctx.getString(R.string.delete))
+                new DialogBack(ListaNotasActivity.this)
+                        .setTitle(getString(R.string.attention))
+                        .setMsg(getString(R.string.select_option))
+                        .setSim(getString(R.string.edit))
+                        .setNao(getString(R.string.delete))
                         .setOnSimListener((dialog, which) -> {
-                            loader = new DialogLoading(ListaNotasActivity.this, ctx.getString(R.string.loading)).build();
+                            loader = new DialogLoading(ListaNotasActivity.this, getString(R.string.loading)).build();
                             loader.show();
                             Intent goToEdit = new Intent(ListaNotasActivity.this, FormularioActiviy.class);
                             goToEdit.putExtra(CHAVE_NOTA, nota);
@@ -101,12 +99,12 @@ public class ListaNotasActivity extends AppCompatActivity {
                         })
                         .setOnNaoListener((dialog, which) -> {
                             dao = new NotasDao(ListaNotasActivity.this);
-                            loader = new DialogLoading(ListaNotasActivity.this, ctx.getString(R.string.excluindo)).build();
+                            loader = new DialogLoading(ListaNotasActivity.this, getString(R.string.excluindo)).build();
                             loader.show();
                             dao.delete(nota);
                             carregaNotas();
                             loader.dismiss();
-                            Toast.makeText(ListaNotasActivity.this, ctx.getString(R.string.register_deleted), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ListaNotasActivity.this, getString(R.string.register_deleted), Toast.LENGTH_SHORT).show();
                         }).build().show();
             }
         });
@@ -129,8 +127,8 @@ public class ListaNotasActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new DialogFiltro(ListaNotasActivity.this)
-                        .setFiltrar(ctx.getString(R.string.filter))
-                        .setCancelar(ctx.getString(R.string.cancel))
+                        .setFiltrar(getString(R.string.filter))
+                        .setCancelar(getString(R.string.cancel))
                         .setOnFiltrarListener(((dialog, which) -> {
                             texto = ((Dialog) dialog).findViewById(R.id.dlg_filtro_edt_txt);
                             if (!TextUtils.isEmpty(texto.getText().toString())) {
@@ -164,9 +162,9 @@ public class ListaNotasActivity extends AppCompatActivity {
     private Boolean validaFiltro(List<Nota> notas) {
         if (notas.size() == 0) {
             new DialogBack(ListaNotasActivity.this)
-                    .setTitle(ctx.getString(R.string.ops))
-                    .setMsg(ctx.getString(R.string.not_found))
-                    .setSim(ctx.getString(R.string.ok))
+                    .setTitle(getString(R.string.ops))
+                    .setMsg(getString(R.string.not_found))
+                    .setSim(getString(R.string.ok))
                     .setOnSimListener(((dialog, which) -> dialog.dismiss()))
                     .build().show();
             return false;
@@ -184,7 +182,7 @@ public class ListaNotasActivity extends AppCompatActivity {
                 dao.save(notaRecebida, 0);
                 carregaNotas();
                 adapter.adicionaNota();
-                Toast.makeText(ListaNotasActivity.this, ctx.getString(R.string.saved_sucess), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListaNotasActivity.this, getString(R.string.saved_sucess), Toast.LENGTH_SHORT).show();
             }
         }
         if (ehAlteraNota(requestCode, data)) {
@@ -196,7 +194,7 @@ public class ListaNotasActivity extends AppCompatActivity {
                     dao.save(notaRecebida, 0);
                 }
                 carregaNotas();
-                Toast.makeText(ListaNotasActivity.this, ctx.getString(R.string.updated_sucess), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListaNotasActivity.this, getString(R.string.updated_sucess), Toast.LENGTH_SHORT).show();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

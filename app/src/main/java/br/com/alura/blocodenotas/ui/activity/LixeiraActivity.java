@@ -1,6 +1,5 @@
 package br.com.alura.blocodenotas.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -23,14 +22,12 @@ public class LixeiraActivity extends AppCompatActivity {
     private ListaNotasExcAdapter adapter;
     private List<Lixeira> notasEx;
     private LixeiraDao dao;
-    private Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lixeira);
         setTitle(TITLE_APPBAR);
-        ctx = this;
 
         carregaExcluidas();
     }
@@ -48,15 +45,15 @@ public class LixeiraActivity extends AppCompatActivity {
 
             if (validaLixeira()) {
                 new DialogBack(this)
-                        .setSim(ctx.getString(R.string.yes))
-                        .setNao(ctx.getString(R.string.no))
-                        .setTitle(ctx.getString(R.string.attention))
-                        .setMsg(ctx.getString(R.string.question_clear_trash))
+                        .setSim(getString(R.string.yes))
+                        .setNao(getString(R.string.no))
+                        .setTitle(getString(R.string.attention))
+                        .setMsg(getString(R.string.question_clear_trash))
                         .setOnSimListener(((dialog, which) -> {
                             if (dao.findAll().size() > 1) {
-                                Toast.makeText(LixeiraActivity.this, ctx.getString(R.string.registers_deleted), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LixeiraActivity.this, getString(R.string.registers_deleted), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(LixeiraActivity.this, ctx.getString(R.string.register_deleted), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LixeiraActivity.this, getString(R.string.register_deleted), Toast.LENGTH_SHORT).show();
                             }
                             dao.deleteAll();
                             carregaExcluidas();
@@ -69,15 +66,15 @@ public class LixeiraActivity extends AppCompatActivity {
         if (validaLixeira()) {
             if (item.getItemId() == R.id.menu_restore_all) {
                 new DialogBack(this)
-                        .setSim(ctx.getString(R.string.yes))
-                        .setNao(ctx.getString(R.string.no))
-                        .setTitle(ctx.getString(R.string.attention))
-                        .setMsg(ctx.getString(R.string.question_restore_notes))
+                        .setSim(getString(R.string.yes))
+                        .setNao(getString(R.string.no))
+                        .setTitle(getString(R.string.attention))
+                        .setMsg(getString(R.string.question_restore_notes))
                         .setOnSimListener(((dialog, which) -> {
                             if (dao.findAll().size() > 1) {
-                                Toast.makeText(LixeiraActivity.this, ctx.getString(R.string.notes_restore), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LixeiraActivity.this, getString(R.string.notes_restore), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(LixeiraActivity.this, ctx.getString(R.string.note_restore), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LixeiraActivity.this, getString(R.string.note_restore), Toast.LENGTH_SHORT).show();
                             }
                             dao.restaurarTudo();
                             carregaExcluidas();
@@ -86,16 +83,15 @@ public class LixeiraActivity extends AppCompatActivity {
                         .build().show();
             }
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     private Boolean validaLixeira() {
         if (dao.findAll().size() == 0) {
             new DialogBack(LixeiraActivity.this)
-                    .setTitle(ctx.getString(R.string.attention))
-                    .setMsg(ctx.getString(R.string.trash_empty))
-                    .setSim(ctx.getString(R.string.ok))
+                    .setTitle(getString(R.string.attention))
+                    .setMsg(getString(R.string.trash_empty))
+                    .setSim(getString(R.string.ok))
                     .setOnSimListener(((dialog, which) -> dialog.dismiss()))
                     .build().show();
             return false;
@@ -124,22 +120,21 @@ public class LixeiraActivity extends AppCompatActivity {
             public void onItemExClickListener(Lixeira lixeira, int posicao) {
 
                 new DialogBack(LixeiraActivity.this)
-                        .setTitle(ctx.getString(R.string.attention))
-                        .setMsg(ctx.getString(R.string.select_option))
-                        .setSim(ctx.getString(R.string.restore))
-                        .setNao(ctx.getString(R.string.delete))
+                        .setTitle(getString(R.string.attention))
+                        .setMsg(getString(R.string.select_option))
+                        .setSim(getString(R.string.restore))
+                        .setNao(getString(R.string.delete))
                         .setOnSimListener(((dialog, which) -> {
                             dao.restaurarNota(lixeira);
                             carregaExcluidas();
-                            Toast.makeText(LixeiraActivity.this, ctx.getString(R.string.note_restore), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LixeiraActivity.this, getString(R.string.note_restore), Toast.LENGTH_SHORT).show();
                         }))
                         .setOnNaoListener(((dialog, which) -> {
                             dao.delete(lixeira);
                             carregaExcluidas();
-                            Toast.makeText(LixeiraActivity.this, ctx.getString(R.string.deleted_permanently), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LixeiraActivity.this, getString(R.string.deleted_permanently), Toast.LENGTH_SHORT).show();
                         })).build().show();
             }
         });
     }
 }
-

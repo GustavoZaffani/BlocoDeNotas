@@ -14,6 +14,7 @@
     <string name="question_clear_trash">Tem certeza que deseja limpar a lixeira?</string>
     <string name="question_restore_notes">Tem certeza que deseja restaurar todas as notas?</string>
     <string name="question_back">Deseja realmente voltar?</string>
+    <string name="sure_deleted">Tem certeza que deseja excluir essa nota?</string>
 
     <!--Opções de Dialogs-->
     <string name="yes">Sim</string>
