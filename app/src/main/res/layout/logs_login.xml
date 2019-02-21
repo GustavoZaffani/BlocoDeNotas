@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="@dimen/labels_text_size">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/log_txt_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Usuário:"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/log_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/log_txt_user"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.00"
+            app:layout_constraintStart_toEndOf="@id/log_txt_user"
+            app:layout_constraintTop_toTopOf="@+id/log_txt_user"
+            tools:text="Titulo" />
+
+        <TextView
+            android:id="@+id/log_txt_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data Acesso:"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/log_txt_user"
+            app:layout_constraintStart_toStartOf="@id/log_txt_user"/>
+
+        <TextView
+            android:id="@+id/log_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/log_txt_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.04"
+            app:layout_constraintStart_toEndOf="@+id/log_txt_data"
+            app:layout_constraintTop_toBottomOf="@+id/log_user"
+            tools:text="31/12/2018 - 09:38" />
+
+        <TextView
+            android:id="@+id/log_txt_token"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Token:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/log_txt_data"
+            app:layout_constraintTop_toBottomOf="@id/log_txt_data" />
+
+        <TextView
+            android:id="@+id/log_token"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/log_txt_token"
+            app:layout_constraintTop_toBottomOf="@id/log_data"
+            tools:text="3hn4235434u54356o436o43v6u5v6dw13467" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

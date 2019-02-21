@@ -23,6 +23,24 @@
         android:layout_margin="8dp">
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/lista_btn_logs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_new"
+            android:src="@drawable/account_edit"
+            app:fab_label="Logs"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/lista_btn_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_new"
+            android:src="@drawable/account_edit"
+            app:fab_label="Usuário"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
             android:id="@+id/lista_btn_lixeira"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

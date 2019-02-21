@@ -3,13 +3,17 @@ package br.com.alura.blocodenotas.ui.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,15 +22,20 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import br.com.alura.blocodenotas.R;
 import br.com.alura.blocodenotas.dao.NotasDao;
+import br.com.alura.blocodenotas.dao.UsuarioDao;
 import br.com.alura.blocodenotas.dialog.DialogBack;
 import br.com.alura.blocodenotas.dialog.DialogFiltro;
 import br.com.alura.blocodenotas.dialog.DialogLoading;
+import br.com.alura.blocodenotas.dialog.DialogUsuario;
 import br.com.alura.blocodenotas.helper.calllback.NotaItemTouchHelper;
 import br.com.alura.blocodenotas.model.Nota;
+import br.com.alura.blocodenotas.model.Usuario;
 import br.com.alura.blocodenotas.ui.recyclerView.adapter.ListaNotasAdapter;
 import br.com.alura.blocodenotas.ui.recyclerView.adapter.listener.OnItemClickListener;
 
@@ -43,8 +52,9 @@ public class ListaNotasActivity extends AppCompatActivity {
     private NotasDao dao;
     private List<Nota> notas;
     private Dialog loader;
-    private EditText texto;
+    private EditText texto, user, pass;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +64,8 @@ public class ListaNotasActivity extends AppCompatActivity {
         goToNewForm();
         goToFilter();
         goToLixeira();
+        goToNewUser();
+        goToLogs();
     }
 
     @Override
@@ -121,6 +133,41 @@ public class ListaNotasActivity extends AppCompatActivity {
         });
     }
 
+    private void goToLogs() {
+        FloatingActionButton openLogs = findViewById(R.id.lista_btn_logs);
+        openLogs.setOnClickListener(view -> {
+            startActivity(new Intent(ListaNotasActivity.this, ListaLoginActivity.class));
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void goToNewUser() {
+        FloatingActionButton btnUser = findViewById(R.id.lista_btn_user);
+        btnUser.setOnClickListener( view -> {
+            new DialogUsuario(ListaNotasActivity.this)
+                    .setSalvar(getString(R.string.save))
+                    .setCancelar(getString(R.string.cancel))
+                    .setOnCancelarListener(((dialog, which) -> dialog.dismiss()))
+                    .setOnSalvarListener(((dialog, which) -> {
+                        Usuario usuario = getDadosUsuario(dialog);
+                        new UsuarioDao(ListaNotasActivity.this).updateUser(usuario);
+                        Toast.makeText(ListaNotasActivity.this, "Alterado com Sucesso", Toast.LENGTH_SHORT).show();
+                    }))
+                    .build().show();
+        });
+    }
+
+    private Usuario getDadosUsuario(DialogInterface dialog) {
+        Usuario usuario = new Usuario();
+        user = ((Dialog) dialog).findViewById(R.id.usuario_edt_user);
+        pass = ((Dialog) dialog).findViewById(R.id.usuario_edt_pass);
+        if(!TextUtils.isEmpty(user.getText().toString()) && !TextUtils.isEmpty(pass.getText().toString())) {
+            usuario.setUsuario(user.getText().toString());
+            usuario.setSenha(pass.getText().toString());
+        }
+        return usuario;
+    }
+
     private void goToFilter() {
         FloatingActionButton filter = findViewById(R.id.lista_btn_search);
         filter.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +193,17 @@ public class ListaNotasActivity extends AppCompatActivity {
                         .build().show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        new DialogBack(this)
+                .setTitle("Sair")
+                .setMsg("Deseja finalizar o bloco de notas?")
+                .setSim("sim")
+                .setNao("não")
+                .setOnSimListener((dialog, which) -> finishAffinity())
+                .setOnNaoListener(((dialog, which) -> dialog.dismiss())).build().show();
     }
 
     private void goToNewForm() {

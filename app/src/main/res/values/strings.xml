@@ -25,6 +25,7 @@
     <string name="restore">Restaurar</string>
     <string name="cancel">Cancelar</string>
     <string name="filter">Filtrar</string>
+    <string name="save">Salvar</string>
 
     <!--Resultados-->
     <string name="not_found">Nenhum resultado encontrado!</string>

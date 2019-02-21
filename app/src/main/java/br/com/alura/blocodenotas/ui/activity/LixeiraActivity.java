@@ -63,8 +63,9 @@ public class LixeiraActivity extends AppCompatActivity {
             }
         }
 
-        if (validaLixeira()) {
-            if (item.getItemId() == R.id.menu_restore_all) {
+        if (item.getItemId() == R.id.menu_restore_all) {
+
+            if (validaLixeira()) {
                 new DialogBack(this)
                         .setSim(getString(R.string.yes))
                         .setNao(getString(R.string.no))
@@ -83,6 +84,7 @@ public class LixeiraActivity extends AppCompatActivity {
                         .build().show();
             }
         }
+
         return super.onOptionsItemSelected(item);
     }
 
