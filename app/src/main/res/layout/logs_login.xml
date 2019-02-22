@@ -33,10 +33,10 @@
             android:layout_margin="8dp"
             android:layout_marginTop="8dp"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/log_txt_user"
+            app:layout_constraintBottom_toBottomOf="@+id/log_txt_user"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.00"
-            app:layout_constraintStart_toEndOf="@id/log_txt_user"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/log_txt_user"
             app:layout_constraintTop_toTopOf="@+id/log_txt_user"
             tools:text="Titulo" />
 
@@ -45,21 +45,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Data Acesso:"
-            android:textStyle="bold"
             android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/log_txt_user"
-            app:layout_constraintStart_toStartOf="@id/log_txt_user"/>
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/log_txt_user"
+            app:layout_constraintTop_toBottomOf="@id/log_txt_user" />
 
         <TextView
             android:id="@+id/log_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/log_txt_data"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.04"
+            app:layout_constraintHorizontal_bias="0.02"
             app:layout_constraintStart_toEndOf="@+id/log_txt_data"
             app:layout_constraintTop_toBottomOf="@+id/log_user"
             tools:text="31/12/2018 - 09:38" />
@@ -86,7 +87,6 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/log_txt_token"
-            app:layout_constraintTop_toBottomOf="@id/log_data"
             tools:text="3hn4235434u54356o436o43v6u5v6dw13467" />
 
 

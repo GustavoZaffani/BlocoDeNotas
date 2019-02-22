@@ -19,7 +19,8 @@
         <activity android:name=".ui.activity.ListaNotasActivity" />
         <activity android:name=".ui.activity.FormularioActiviy" />
         <activity android:name=".ui.activity.LixeiraActivity" />
-        <activity android:name=".ui.activity.ListaLoginActivity"></activity>
+        <activity android:name=".ui.activity.ListaLoginActivity" />
+        <activity android:name=".ui.activity.MainActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@style/ThemeOverlay.AppCompat.Light">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_home"
+            android:icon="@drawable/home"
+            android:title="Home" />
+    </group>
+
+    <item
+        android:id="@+id/drawer_lixeira"
+        android:icon="@drawable/ic_delete_black_24dp"
+        android:title="Lixeira" />
+
+    <item
+        android:id="@+id/drawer_logs"
+        android:title="Logs"
+        android:icon="@drawable/alert_circle"/>
+
+    <item
+        android:icon="@drawable/account_edit"
+        android:id="@+id/drawer_usuario"
+        android:title="Usuário" />
+
+</menu>

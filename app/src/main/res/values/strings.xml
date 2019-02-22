@@ -46,10 +46,22 @@
     <string name="table_lixeira">lixeira</string>
     <string name="table_notas">notas</string>
 
-    <string name="column_id">id</string>
-    <string name="column_titulo">titulo</string>
-    <string name="column_descricao">descricao</string>
-    <string name="column_data">data</string>
+    <string name="nota_id">id</string>
+    <string name="nota_titulo">titulo</string>
+    <string name="nota_descricao">descricao</string>
+    <string name="nota_data">data</string>
+
+    <string name="table_login">login</string>
+    <string name="login_id_token">id_token</string>
+    <string name="login_nome_user">nome_user</string>
+    <string name="login_data">data</string>
+
+    <string name="table_usuario">usuario</string>
+    <string name="usuario_id">id</string>
+    <string name="usuario_usuario">usuario</string>
+    <string name="usuario_senha">senha</string>
+
+    <string name="where_id_login">id_token = ?</string>
 
     <string name="where_id">id = ?</string>
 

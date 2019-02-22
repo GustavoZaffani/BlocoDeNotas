@@ -42,10 +42,10 @@ public class NotasDao {
 
     private ContentValues getDados(Nota nota) {
         ContentValues dados = new ContentValues();
-        dados.put(ctx.getString(R.string.column_id), nota.getId());
-        dados.put(ctx.getString(R.string.column_titulo), nota.getTitulo());
-        dados.put(ctx.getString(R.string.column_descricao), nota.getDescricao());
-        dados.put(ctx.getString(R.string.column_data), nota.getData());
+        dados.put(ctx.getString(R.string.nota_id), nota.getId());
+        dados.put(ctx.getString(R.string.nota_titulo), nota.getTitulo());
+        dados.put(ctx.getString(R.string.nota_descricao), nota.getDescricao());
+        dados.put(ctx.getString(R.string.nota_data), nota.getData());
         return dados;
     }
 
@@ -70,10 +70,10 @@ public class NotasDao {
         List<Nota> notas = new ArrayList<Nota>();
         while (c.moveToNext()) {
             Nota nota = new Nota();
-            nota.setId(c.getString(c.getColumnIndex(ctx.getString(R.string.column_id))));
-            nota.setTitulo(c.getString(c.getColumnIndex(ctx.getString(R.string.column_titulo))));
-            nota.setDescricao(c.getString(c.getColumnIndex(ctx.getString(R.string.column_descricao))));
-            nota.setData(c.getString(c.getColumnIndex(ctx.getString(R.string.column_data))));
+            nota.setId(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_id))));
+            nota.setTitulo(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_titulo))));
+            nota.setDescricao(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_descricao))));
+            nota.setData(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_data))));
             notas.add(nota);
         }
         return notas;

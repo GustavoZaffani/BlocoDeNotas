@@ -2,26 +2,19 @@ package br.com.alura.blocodenotas.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import java.text.DateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import br.com.alura.blocodenotas.R;
+import br.com.alura.blocodenotas.Utils.Utils;
 import br.com.alura.blocodenotas.dialog.DialogBack;
 import br.com.alura.blocodenotas.dialog.DialogLoading;
 import br.com.alura.blocodenotas.model.Nota;
@@ -74,7 +67,6 @@ public class FormularioActiviy extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -110,17 +102,11 @@ public class FormularioActiviy extends AppCompatActivity {
         new DialogBack(FormularioActiviy.this)
                 .setTitle(getString(R.string.question_back))
                 .setMsg(getString(R.string.lost_data))
-                .setOnNaoListener(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).setOnSimListener(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        }).build().show();
+                .setOnNaoListener(((dialog, which) -> {
+                    dialog.dismiss();
+                }))
+                .setOnSimListener(((dialog, which) -> finish()))
+                .build().show();
     }
 
     private void retornaNota(Nota nota) {
@@ -130,10 +116,9 @@ public class FormularioActiviy extends AppCompatActivity {
         setResult(Activity.RESULT_OK, returnInsert);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @NonNull
     private Nota criaNota() {
-        String data = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss"));
+        String data = new Utils().formataDataHora(new Date());
         return new Nota(titulo.getText().toString(), descricao.getText().toString(), data);
     }
 

@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_new"
-            android:src="@drawable/account_edit"
+            android:src="@drawable/alert_circle"
             app:fab_label="Logs"
             app:fab_size="mini"/>
 

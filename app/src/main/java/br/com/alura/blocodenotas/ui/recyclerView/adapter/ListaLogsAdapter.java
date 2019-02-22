@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class ListaLogsAdapter extends RecyclerView.Adapter<ListaLogsAdapter.LogV
     private Context ctx;
     private OnLogClickListener onLogClickListener;
 
-    public ListaLogsAdapter (List<Login> logins, Context context) {
+    public ListaLogsAdapter(List<Login> logins, Context context) {
         this.logs = logins;
         this.ctx = context;
     }
@@ -49,7 +48,7 @@ public class ListaLogsAdapter extends RecyclerView.Adapter<ListaLogsAdapter.LogV
         return logs.size();
     }
 
-    public void adicionaLog () {
+    public void adicionaLog() {
         notifyDataSetChanged();
     }
 

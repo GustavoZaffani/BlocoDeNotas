@@ -2,7 +2,6 @@ package br.com.alura.blocodenotas.ui.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -13,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,8 +19,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -143,7 +139,7 @@ public class ListaNotasActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void goToNewUser() {
         FloatingActionButton btnUser = findViewById(R.id.lista_btn_user);
-        btnUser.setOnClickListener( view -> {
+        btnUser.setOnClickListener(view -> {
             new DialogUsuario(ListaNotasActivity.this)
                     .setSalvar(getString(R.string.save))
                     .setCancelar(getString(R.string.cancel))
@@ -161,7 +157,7 @@ public class ListaNotasActivity extends AppCompatActivity {
         Usuario usuario = new Usuario();
         user = ((Dialog) dialog).findViewById(R.id.usuario_edt_user);
         pass = ((Dialog) dialog).findViewById(R.id.usuario_edt_pass);
-        if(!TextUtils.isEmpty(user.getText().toString()) && !TextUtils.isEmpty(pass.getText().toString())) {
+        if (!TextUtils.isEmpty(user.getText().toString()) && !TextUtils.isEmpty(pass.getText().toString())) {
             usuario.setUsuario(user.getText().toString());
             usuario.setSenha(pass.getText().toString());
         }

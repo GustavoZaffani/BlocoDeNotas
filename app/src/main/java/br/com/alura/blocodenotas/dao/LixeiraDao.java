@@ -41,10 +41,10 @@ public class LixeiraDao {
         List<Lixeira> notasExcluidas = new ArrayList<Lixeira>();
         while (c.moveToNext()) {
             Lixeira lixeira = new Lixeira();
-            lixeira.setId(c.getString(c.getColumnIndex(ctx.getString(R.string.column_id))));
-            lixeira.setTitulo(c.getString(c.getColumnIndex(ctx.getString(R.string.column_titulo))));
-            lixeira.setDescricao(c.getString(c.getColumnIndex(ctx.getString(R.string.column_descricao))));
-            lixeira.setData(c.getString(c.getColumnIndex(ctx.getString(R.string.column_data))));
+            lixeira.setId(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_id))));
+            lixeira.setTitulo(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_titulo))));
+            lixeira.setDescricao(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_descricao))));
+            lixeira.setData(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_data))));
             notasExcluidas.add(lixeira);
         }
         return notasExcluidas;
@@ -52,10 +52,10 @@ public class LixeiraDao {
 
     private ContentValues getDados(Nota nota) {
         ContentValues dados = new ContentValues();
-        dados.put(ctx.getString(R.string.column_id), nota.getId());
-        dados.put(ctx.getString(R.string.column_titulo), nota.getTitulo());
-        dados.put(ctx.getString(R.string.column_descricao), nota.getDescricao());
-        dados.put(ctx.getString(R.string.column_data), nota.getData());
+        dados.put(ctx.getString(R.string.nota_id), nota.getId());
+        dados.put(ctx.getString(R.string.nota_titulo), nota.getTitulo());
+        dados.put(ctx.getString(R.string.nota_descricao), nota.getDescricao());
+        dados.put(ctx.getString(R.string.nota_data), nota.getData());
         return dados;
     }
 
