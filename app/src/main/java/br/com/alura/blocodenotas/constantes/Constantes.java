@@ -1,4 +1,4 @@
-package br.com.alura.blocodenotas.ui.activity;
+package br.com.alura.blocodenotas.constantes;
 
 public interface Constantes {
 

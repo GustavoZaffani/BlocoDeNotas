@@ -12,7 +12,8 @@ import br.com.alura.blocodenotas.R;
 import br.com.alura.blocodenotas.model.Lixeira;
 import br.com.alura.blocodenotas.model.Nota;
 
-import static br.com.alura.blocodenotas.ui.activity.Constantes.COD_RESTAURA_NOTA;
+import static br.com.alura.blocodenotas.constantes.Constantes.COD_RESTAURA_NOTA;
+import static br.com.alura.blocodenotas.constantes.Database.*;
 
 public class LixeiraDao {
 
@@ -27,7 +28,7 @@ public class LixeiraDao {
     public void save(Nota nota) {
         ContentValues dados;
         dados = getDados(nota);
-        database.insert(ctx.getString(R.string.table_lixeira), null, dados);
+        database.insert(TABLE_LIXEIRA, null, dados);
     }
 
     public List<Lixeira> findAll() {
@@ -41,10 +42,10 @@ public class LixeiraDao {
         List<Lixeira> notasExcluidas = new ArrayList<Lixeira>();
         while (c.moveToNext()) {
             Lixeira lixeira = new Lixeira();
-            lixeira.setId(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_id))));
-            lixeira.setTitulo(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_titulo))));
-            lixeira.setDescricao(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_descricao))));
-            lixeira.setData(c.getString(c.getColumnIndex(ctx.getString(R.string.nota_data))));
+            lixeira.setId(c.getString(c.getColumnIndex(LIXEIRA_ID)));
+            lixeira.setTitulo(c.getString(c.getColumnIndex(LIXEIRA_TITULO)));
+            lixeira.setDescricao(c.getString(c.getColumnIndex(LIXEIRA_DESCRICAO)));
+            lixeira.setData(c.getString(c.getColumnIndex(LIXEIRA_DATA)));
             notasExcluidas.add(lixeira);
         }
         return notasExcluidas;
@@ -52,16 +53,16 @@ public class LixeiraDao {
 
     private ContentValues getDados(Nota nota) {
         ContentValues dados = new ContentValues();
-        dados.put(ctx.getString(R.string.nota_id), nota.getId());
-        dados.put(ctx.getString(R.string.nota_titulo), nota.getTitulo());
-        dados.put(ctx.getString(R.string.nota_descricao), nota.getDescricao());
-        dados.put(ctx.getString(R.string.nota_data), nota.getData());
+        dados.put(NOTAS_ID, nota.getId());
+        dados.put(NOTAS_TITULO, nota.getTitulo());
+        dados.put(NOTAS_DESCRICAO, nota.getDescricao());
+        dados.put(NOTAS_DATA, nota.getData());
         return dados;
     }
 
     public void delete(Lixeira lixeira) {
         String[] params = {lixeira.getId()};
-        database.delete(ctx.getString(R.string.table_lixeira), ctx.getString(R.string.where_id), params);
+        database.delete(TABLE_LIXEIRA, ctx.getString(R.string.where_id), params);
     }
 
     public void restaurarNota(Lixeira lixeira) {

@@ -1,4 +1,4 @@
-package br.com.alura.blocodenotas.Utils;
+package br.com.alura.blocodenotas.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

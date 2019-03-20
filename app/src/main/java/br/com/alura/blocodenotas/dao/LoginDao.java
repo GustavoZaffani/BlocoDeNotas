@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +12,8 @@ import java.util.UUID;
 
 import br.com.alura.blocodenotas.R;
 import br.com.alura.blocodenotas.model.Login;
+
+import static br.com.alura.blocodenotas.constantes.Database.*;
 
 public class LoginDao {
 
@@ -36,9 +37,9 @@ public class LoginDao {
         List<Login> logs = new ArrayList<>();
         while (c.moveToNext()) {
             Login login = new Login();
-            login.setIdToken(c.getString(c.getColumnIndex(ctx.getString(R.string.login_id_token))));
-            login.setUsuario(c.getString(c.getColumnIndex(ctx.getString(R.string.login_nome_user))));
-            login.setHoraLogin(c.getString(c.getColumnIndex(ctx.getString(R.string.login_data))));
+            login.setIdToken(c.getString(c.getColumnIndex(LOGIN_IDTOKEN)));
+            login.setUsuario(c.getString(c.getColumnIndex(LOGIN_NOMEUSER)));
+            login.setHoraLogin(c.getString(c.getColumnIndex(LOGIN_DATA)));
             logs.add(login);
         }
         return logs;
@@ -47,17 +48,17 @@ public class LoginDao {
     private void save(Login login) {
         ContentValues dados = getDados(login);
         try {
-            db.insert(ctx.getString(R.string.table_login), null, dados);
+            db.insert(TABLE_LOGIN, null, dados);
         } catch (SQLiteException ex) {
-            db.update(ctx.getString(R.string.table_login), dados, ctx.getString(R.string.where_id_login), new String[]{login.getIdToken()});
+            db.update(TABLE_LOGIN, dados, ctx.getString(R.string.where_id_login), new String[]{login.getIdToken()});
         }
     }
 
     private ContentValues getDados(Login login) {
         ContentValues cv = new ContentValues();
-        cv.put(ctx.getString(R.string.login_id_token), login.getIdToken());
-        cv.put(ctx.getString(R.string.login_nome_user), login.getUsuario());
-        cv.put(ctx.getString(R.string.login_data), login.getHoraLogin());
+        cv.put(LOGIN_IDTOKEN, login.getIdToken());
+        cv.put(LOGIN_NOMEUSER, login.getUsuario());
+        cv.put(LOGIN_DATA, login.getHoraLogin());
         return cv;
     }
 
@@ -74,7 +75,7 @@ public class LoginDao {
     }
 
     public void delete(String idLogin) {
-        db.delete(ctx.getString(R.string.table_login), ctx.getString(R.string.where_id_login), new String[]{idLogin});
+        db.delete(TABLE_LOGIN, ctx.getString(R.string.where_id_login), new String[]{idLogin});
     }
 
     public void deleteAll() {

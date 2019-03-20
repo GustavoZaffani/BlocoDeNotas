@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import br.com.alura.blocodenotas.R;
 import br.com.alura.blocodenotas.model.Usuario;
 
+import static br.com.alura.blocodenotas.constantes.Database.*;
+
 public class UsuarioDao {
 
     private Context ctx;
@@ -24,14 +26,14 @@ public class UsuarioDao {
             usuario.setId(1);
         }
         dados = getDados(usuario);
-        database.update(ctx.getString(R.string.table_usuario), dados, ctx.getString(R.string.where_id), new String[]{usuario.getId().toString()});
+        database.update(TABLE_USUARIO, dados, ctx.getString(R.string.where_id), new String[]{usuario.getId().toString()});
     }
 
     private ContentValues getDados(Usuario usuario) {
         ContentValues cv = new ContentValues();
-        cv.put(ctx.getString(R.string.usuario_id), usuario.getId());
-        cv.put(ctx.getString(R.string.usuario_usuario), usuario.getUsuario());
-        cv.put(ctx.getString(R.string.usuario_senha), usuario.getSenha());
+        cv.put(USUARIO_ID, usuario.getId());
+        cv.put(USUARIO_USUARIO, usuario.getUsuario());
+        cv.put(USUARIO_SENHA, usuario.getSenha());
         return cv;
     }
 
@@ -46,9 +48,9 @@ public class UsuarioDao {
     private Usuario dadosBD(Cursor c) {
         Usuario usuario = new Usuario();
         while (c.moveToNext()) {
-            usuario.setId(c.getInt(c.getColumnIndex(ctx.getString(R.string.usuario_id))));
-            usuario.setUsuario(c.getString(c.getColumnIndex(ctx.getString(R.string.usuario_usuario))));
-            usuario.setSenha(c.getString(c.getColumnIndex(ctx.getString(R.string.usuario_senha))));
+            usuario.setId(c.getInt(c.getColumnIndex(USUARIO_ID)));
+            usuario.setUsuario(c.getString(c.getColumnIndex(USUARIO_USUARIO)));
+            usuario.setSenha(c.getString(c.getColumnIndex(USUARIO_SENHA)));
         }
         return usuario;
     }

@@ -14,14 +14,12 @@ import android.widget.EditText;
 import java.util.Date;
 
 import br.com.alura.blocodenotas.R;
-import br.com.alura.blocodenotas.Utils.Utils;
+import br.com.alura.blocodenotas.utils.Utils;
 import br.com.alura.blocodenotas.dialog.DialogBack;
 import br.com.alura.blocodenotas.dialog.DialogLoading;
 import br.com.alura.blocodenotas.model.Nota;
 
-import static br.com.alura.blocodenotas.ui.activity.Constantes.CHAVE_NOTA;
-import static br.com.alura.blocodenotas.ui.activity.Constantes.CHAVE_POSICAO;
-import static br.com.alura.blocodenotas.ui.activity.Constantes.POSICAO_INVALIDA;
+import static br.com.alura.blocodenotas.constantes.Constantes.*;
 
 public class FormularioActiviy extends AppCompatActivity {
 

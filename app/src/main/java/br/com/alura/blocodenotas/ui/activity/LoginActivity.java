@@ -12,7 +12,7 @@ import android.widget.Toast;
 import java.util.Date;
 
 import br.com.alura.blocodenotas.R;
-import br.com.alura.blocodenotas.Utils.Utils;
+import br.com.alura.blocodenotas.utils.Utils;
 import br.com.alura.blocodenotas.dao.LoginDao;
 import br.com.alura.blocodenotas.dao.UsuarioDao;
 import br.com.alura.blocodenotas.model.Usuario;

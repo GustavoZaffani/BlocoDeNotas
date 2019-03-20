@@ -35,11 +35,7 @@ import br.com.alura.blocodenotas.model.Usuario;
 import br.com.alura.blocodenotas.ui.recyclerView.adapter.ListaNotasAdapter;
 import br.com.alura.blocodenotas.ui.recyclerView.adapter.listener.OnItemClickListener;
 
-import static br.com.alura.blocodenotas.ui.activity.Constantes.CHAVE_NOTA;
-import static br.com.alura.blocodenotas.ui.activity.Constantes.CHAVE_POSICAO;
-import static br.com.alura.blocodenotas.ui.activity.Constantes.COD_REQ_ALTERA_NOTA;
-import static br.com.alura.blocodenotas.ui.activity.Constantes.COD_REQ_INSERE_NOTA;
-import static br.com.alura.blocodenotas.ui.activity.Constantes.POSICAO_INVALIDA;
+import static br.com.alura.blocodenotas.constantes.Constantes.*;
 
 public class ListaNotasActivity extends AppCompatActivity {
 
@@ -56,7 +52,11 @@ public class ListaNotasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_notas);
         setTitle(TITULO_APPBAR);
+        configuraOptions();
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void configuraOptions() {
         goToNewForm();
         goToFilter();
         goToLixeira();
